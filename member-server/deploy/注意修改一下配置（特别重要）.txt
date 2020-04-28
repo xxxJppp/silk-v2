@@ -1,0 +1,24 @@
+
+
+cat example/instance.properties 
+------------------------------
+canal.serverMode = RocketMQ
+canal.mq.servers = 172.16.0.31:9876
+
+canal.mq.flatMessage = true
+
+
+
+
+
+cat canal.properties
+---------------------------------------------
+canal.instance.mysql.slaveId=1234
+canal.instance.master.address=172.16.0.66:3306
+canal.instance.dbUsername=deaking
+canal.instance.dbPassword=deakingP@ssw0rd
+
+
+canal.instance.filter.regex=otc_sync\\.exchange_wallet_wal_record.*,otc_sync\\.member
+
+canal.mq.topic=otc_sync

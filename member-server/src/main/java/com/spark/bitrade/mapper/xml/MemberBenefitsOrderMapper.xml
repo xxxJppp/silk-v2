@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.MemberBenefitsOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.bitrade.entity.MemberBenefitsOrder">
+        <id column="id" property="id" />
+        <result column="member_extend_id" property="memberExtendId" />
+        <result column="order_number" property="orderNumber" />
+        <result column="operate_type" property="operateType" />
+        <result column="origin_level" property="originLevel" />
+        <result column="dest_level" property="destLevel" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="pay_type" property="payType" />
+        <result column="amount" property="amount" />
+        <result column="unit" property="unit" />
+        <result column="app_id" property="appId" />
+        <result column="pay_time" property="payTime" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, member_extend_id, order_number, operate_type, origin_level, dest_level, start_time, end_time, pay_type, amount, unit, app_id, pay_time, create_time, update_time
+    </sql>
+
+</mapper>

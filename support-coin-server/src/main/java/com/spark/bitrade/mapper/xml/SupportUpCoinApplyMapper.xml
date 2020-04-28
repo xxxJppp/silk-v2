@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.SupportUpCoinApplyMapper">
+
+    <select id="widthDrawToAuditList" resultType="com.spark.bitrade.vo.WidthRechargeStaticsVo">
+
+        SELECT
+        m.id memberId,
+        m.username userName,
+        w.create_time,
+        w.total_amount amount
+        FROM
+        withdraw_record w LEFT JOIN member m ON m.id=w.member_id
+        WHERE
+        w.`status` IN (0, 1, 4)
+        AND w.coin_id=#{coinId}
+        <if test="pageParam.startTime!=null and pageParam.startTime!=''">
+            AND w.create_time <![CDATA[>=]]> #{pageParam.startTime}
+        </if>
+        <if test="pageParam.endTime!=null and pageParam.endTime!=''">
+            AND w.create_time <![CDATA[<=]]> #{pageParam.endTime}
+        </if>
+        order by w.create_time desc
+    </select>
+    <select id="widthDrawToAuditTotal" resultType="java.math.BigDecimal">
+        SELECT
+        SUM(w.total_amount)
+        FROM
+        withdraw_record w
+        WHERE
+        w.`status` IN (0, 1, 4)
+        AND w.coin_id=#{coinId}
+        <if test="pageParam.startTime!=null and pageParam.startTime!=''">
+            AND w.create_time <![CDATA[>=]]> #{pageParam.startTime}
+        </if>
+        <if test="pageParam.endTime!=null and pageParam.endTime!=''">
+            AND w.create_time <![CDATA[<=]]> #{pageParam.endTime}
+        </if>
+    </select>
+    <select id="widthDrawToAuditPersonCount" resultType="java.lang.Integer">
+
+        SELECT COUNT(m.member_id) FROM (
+        SELECT
+        w.member_id
+        FROM
+        withdraw_record w
+        WHERE
+        w.`status` IN (0, 1, 4)
+        AND w.coin_id=#{coinId}
+        <if test="pageParam.startTime!=null and pageParam.startTime!=''">
+            AND w.create_time <![CDATA[>=]]> #{pageParam.startTime}
+        </if>
+        <if test="pageParam.endTime!=null and pageParam.endTime!=''">
+            AND w.create_time <![CDATA[<=]]> #{pageParam.endTime}
+        </if>
+        GROUP BY w.member_id) m
+    </select>
+    <select id="withRechargeTotal" resultType="java.math.BigDecimal">
+        SELECT SUM(mt.amount) FROM member_transaction mt WHERE mt.type=#{type} AND mt.symbol=#{coin}
+        <if test="pageParam.startTime!=null and pageParam.startTime!=''">
+            AND mt.create_time <![CDATA[>=]]> #{pageParam.startTime}
+        </if>
+        <if test="pageParam.endTime!=null and pageParam.endTime!=''">
+            AND mt.create_time <![CDATA[<=]]> #{pageParam.endTime}
+        </if>
+    </select>
+    <select id="withPersonCount" resultType="java.lang.Integer">
+        SELECT COUNT(k.member_id) FROM (
+        SELECT
+        mt.member_id
+        FROM
+        member_transaction mt
+        WHERE
+        mt.type = #{type}
+        AND mt.symbol = #{coin}
+        <if test="pageParam.startTime!=null and pageParam.startTime!=''">
+            AND mt.create_time <![CDATA[>=]]> #{pageParam.startTime}
+        </if>
+        <if test="pageParam.endTime!=null and pageParam.endTime!=''">
+            AND mt.create_time <![CDATA[<=]]> #{pageParam.endTime}
+        </if>
+        GROUP BY
+        mt.member_id
+        ) k
+    </select>
+    <select id="validHoldCoinCount" resultType="java.math.BigDecimal">
+        SELECT SUM(m.balance) FROM exchange_wallet m WHERE m.member_id in
+        <foreach collection="memberIds" index="index" item="item"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND coin_unit=#{coinId}
+
+
+    </select>
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.ExchangeWalletWalExtMapper">
+
+    <insert id="saveBatch">
+        insert into ${table} (
+        `id`,
+        `member_id`,
+        `coin_unit`,
+        `trade_balance`,
+        `trade_frozen`,
+        `fee`,
+        `fee_discount`,
+        `trade_type`,
+        `ref_id`,
+        `sync_id`,
+        `signature`,
+        `status`,
+        `tcc_status`,
+        `remark`,
+        `create_time`,
+        `update_time`
+        ) values
+        <foreach collection="records" index="index" item="item" separator=",">
+            (
+            #{item.id,jdbcType=BIGINT},
+            #{item.memberId,jdbcType=BIGINT},
+            #{item.coinUnit,jdbcType=VARCHAR},
+            #{item.tradeBalance,jdbcType=DECIMAL},
+            #{item.tradeFrozen,jdbcType=DECIMAL},
+            #{item.fee,jdbcType=DECIMAL},
+            #{item.feeDiscount,jdbcType=DECIMAL},
+            #{item.tradeType,jdbcType=INTEGER},
+            #{item.refId,jdbcType=VARCHAR},
+            #{item.syncId,jdbcType=BIGINT},
+            #{item.signature,jdbcType=VARCHAR},
+            #{item.status,jdbcType=INTEGER},
+            #{item.tccStatus,jdbcType=INTEGER},
+            #{item.remark,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=DATE},
+            #{item.updateTime,jdbcType=DATE}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

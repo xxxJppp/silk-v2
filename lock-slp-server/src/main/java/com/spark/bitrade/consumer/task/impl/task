@@ -1,0 +1,23 @@
+
+以下任务如无特殊说明，继承并实现AbstractTask抽象类
+处理锁仓数据接口
+  HandleLockSlpTask
+生成参与者更新任务
+  BuildActorUpdateTask
+处理更新任务
+  HandleUpdateTask
+
+定时任务接口(不实现AbstractTask抽象类)
+  TimedReleaseJob  定时作业
+  TimedReleaseService
+     获取释放任务列表
+     提供按用户是否的功能
+生成直接推荐人的更新任务
+  BuildInviterUpdateTask
+生成直接推荐人加速释放任务
+  BuildInviterReleaseTask
+推荐人社区奖励加速释放任务（节点加速任务）
+  HandleCommunityReleaseTask
+推荐人分享收益加速释放任务（直推奖励任务）
+  HandleShareReleaseTask
+

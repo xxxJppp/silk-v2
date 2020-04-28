@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.ExchangeCywOrderMapper">
+
+  <select id="queryOrder" resultType="com.spark.bitrade.entity.ExchangeCywOrder">
+      select * from exchange_cyw_order where order_id=#{orderId} and member_id =#{memberId}
+   </select>
+
+  <select id="historyOrders" resultType="com.spark.bitrade.entity.ExchangeOrder">
+      select * from exchange_cyw_order where member_id =#{memberId} and symbol=#{symbol} order by time desc
+   </select>
+
+  <insert id="transferTo" parameterType="com.spark.bitrade.entity.ExchangeCywOrder">
+    insert into ${table} (
+      `order_id`,
+      `member_id`,
+      `amount`,
+      `direction`,
+      `price`,
+      `symbol`,
+      `type`,
+      `coin_symbol`,
+      `base_symbol`,
+      `status`,
+      `time`,
+      `completed_time`,
+      `canceled_time`,
+      `traded_amount`,
+      `validated`,
+      `turnover`,
+      `freeze_amount`
+    ) values (
+      #{order.orderId},
+      #{order.memberId},
+      #{order.amount},
+      #{order.direction},
+      #{order.price},
+      #{order.symbol},
+      #{order.type},
+      #{order.coinSymbol},
+      #{order.baseSymbol},
+      #{order.status},
+      #{order.time},
+      #{order.completedTime},
+      #{order.canceledTime},
+      #{order.tradedAmount},
+      #{order.validated},
+      #{order.turnover},
+      #{order.freezeAmount}
+    )
+  </insert>
+</mapper>

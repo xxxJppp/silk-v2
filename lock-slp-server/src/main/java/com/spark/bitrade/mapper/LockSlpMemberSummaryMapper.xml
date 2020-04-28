@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.LockSlpMemberSummaryMapper">
+
+    <resultMap id="CountMap" type="com.spark.bitrade.dto.SlpMemberSummaryCountDto">
+        <result column="sum_total_amount" property="sumTotalAmount"/>
+        <result column="sum_total_sub_amount" property="sumTotalSubAmount"/>
+        <result column="sum_promotion" property="sumPromotion"/>
+    </resultMap>
+
+    <update id="updateBySummaryDto" parameterType="com.spark.bitrade.dto.SlpMemberSummaryUpdateDto">
+    update lock_slp_member_summary
+    set
+      max_lock_amount = #{amount},
+      max_release_rate = #{rate},
+      min_lock_amount = #{amount},
+      min_release_rate = #{rate},
+      total_valid_amount = total_valid_amount + #{realAmount},
+      total_remain_amount = total_remain_amount + #{remain},
+      update_time = #{time}
+    where id = #{id}
+  </update>
+
+    <select id="countSubSummary" resultMap="CountMap">
+    select
+      sum(total_valid_amount) sum_total_amount,
+      sum(total_sub_valid_amount) sum_total_sub_amount,
+      count(1) sum_promotion
+    from lock_slp_member_summary
+    where inviter_id = #{id} and coin_unit = #{unit}
+  </select>
+
+    <!--    获取锁仓汇总-->
+    <resultMap id="totalLockMap" type="com.spark.bitrade.vo.LockSummationVo">
+        <result column="total_lock" property="totalLock"/>
+    </resultMap>
+    <select id="sumTotalLock" resultMap="totalLockMap">
+        select sum(total_valid_amount)+sum(total_sub_valid_amount) AS total_lock from lock_slp_member_summary
+        where inviter_id=#{inviterId }
+        <if test="startTime != null and startTime != ''">
+            and create_time &gt;= from_unixtime(#{startTime})
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and create_time &lt; from_unixtime(#{endTime})
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.SilkPayMatchRecordMapper">
+
+
+    <select id="findZeroRecords" resultType="com.spark.bitrade.entity.SilkPayMatchRecord">
+
+            SELECT
+                spmr.*
+            FROM
+                silk_pay_match_record spmr
+            LEFT JOIN silk_pay_account spa ON spmr.match_account = spa.id
+            LEFT JOIN silk_pay_device spd ON spa.device_id = spd.id
+            WHERE
+                spd.serial_no = #{serialNo}
+            AND spmr.state = 0
+            ORDER BY
+                spmr.create_time ASC
+            LIMIT 1
+    </select>
+</mapper>

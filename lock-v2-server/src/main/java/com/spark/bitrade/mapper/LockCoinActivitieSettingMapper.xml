@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.LockCoinActivitieSettingMapper">
+    <update id="updateBoughtAmount">
+        update lock_coin_activitie_setting
+        set bought_amount = bought_amount + #{amount}
+        where id =  #{activitieId}
+    </update>
+
+    <select id="findList" resultType="com.spark.bitrade.entity.LockCoinActivitieSetting">
+        SELECT
+            *
+        FROM
+            lock_coin_activitie_setting
+        WHERE
+            activitie_id = #{projetcId}
+        order by
+            lock_days
+    </select>
+
+    <select id="findListByTime" resultType="com.spark.bitrade.entity.LockCoinActivitieSetting">
+        SELECT
+            *
+        FROM
+            lock_coin_activitie_setting
+        WHERE
+            activitie_id = #{projetcId}
+            <![CDATA[
+            AND start_time <= NOW()
+            AND end_time >= NOW()
+             ]]>
+            AND `status` = 1
+        order by
+            lock_days
+    </select>
+
+    <select id="findByIdAndTime" resultType="com.spark.bitrade.entity.LockCoinActivitieSetting">
+        SELECT
+        *
+        FROM
+        lock_coin_activitie_setting
+        WHERE
+        id = #{id}
+        <![CDATA[
+        AND NOW() >= start_time
+        AND NOW() <= end_time
+         ]]>
+        AND `status` = 1
+    </select>
+
+    <!--查询指定活动方案下所有的累计购买数量-->
+    <select id="totalBoughtAmount" resultType="java.math.BigDecimal">
+        SELECT
+            sum(bought_amount) total
+        FROM
+            lock_coin_activitie_setting
+        WHERE
+            activitie_id = #{projetcId}
+
+    </select>
+
+</mapper>

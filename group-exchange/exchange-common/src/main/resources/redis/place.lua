@@ -1,0 +1,1 @@
+-- 占位-- input-- key-- ARGV[1] 锁定时间，默认为秒-- return [ state, value ]-- state 状态 1：获取到锁,0：未获取到锁if not redis.call('get',KEYS[1]) then    redis.call('SETEX',KEYS[1],ARGV[1],1)    return {1}else    return {0}end

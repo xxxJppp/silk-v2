@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.repository.mapper.BtBankMinerOrderTransactionMapper">
+    <resultMap id="BaseResultMap" type="com.spark.bitrade.repository.entity.BtBankMinerOrderTransaction">
+        <!--@mbg.generated-->
+        <!--@Table bt_bank_miner_order_transaction-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="miner_order_id" jdbcType="BIGINT" property="minerOrderId"/>
+        <result column="member_id" jdbcType="BIGINT" property="memberId"/>
+        <result column="reward_amount" jdbcType="DECIMAL" property="rewardAmount"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="unlock_time" jdbcType="TIMESTAMP" property="unlockTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, create_time, miner_order_id, member_id, reward_amount, money, `type`, unlock_time
+    </sql>
+    <insert id="insertGrabOrDepatchOrder">
+
+      INSERT INTO bt_bank_miner_order_transaction (
+        id,
+        create_time,
+        miner_order_id,
+        member_id,
+        reward_amount,
+        money,
+        type,
+        unlock_time
+    )
+    VALUES
+        (
+            #{tr.id},
+            NOW(),
+            #{tr.minerOrderId},
+            #{tr.memberId},
+            #{tr.rewardAmount},
+            #{tr.money},
+            #{tr.type},
+             DATE_ADD(DATE(NOW()),INTERVAL #{timeSpan} MINUTE))
+    </insert>
+    <select id="listUnlockRecords" resultType="com.spark.bitrade.api.dto.UnlockDTO">
+    SELECT
+    id,
+    member_id memberId,
+    balance amount,
+    create_time createTime,
+    1 as type
+    FROM
+    bt_bank_miner_balance_transaction
+    WHERE
+    type = 1
+    and balance > 0
+    AND create_time <![CDATA[<=]]> #{time}
+  </select>
+
+    <select id="listUnlockRecordsCopy" resultType="com.spark.bitrade.api.dto.UnlockDTO">
+    SELECT
+    id,
+    member_id memberId,
+    reward_amount amount,
+    create_time createTime,
+    0 as type
+    FROM
+    bt_bank_miner_order_transaction
+    WHERE
+    type IN (1, 2)
+    AND unlock_time <![CDATA[<=]]> NOW()
+  </select>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.SupportRedAuditRecordMapper">
+    <select id="applyRedPackAuditHistory" resultType="com.spark.bitrade.vo.ApplyRedPackAuditRecordVo">
+        SELECT
+        s.create_time,
+        u.real_name as audit_person,
+        s.audit_status,
+        s.audit_opinion,
+        s.update_time,
+        s.pay_coin,
+        s.pay_amount
+        FROM
+        support_red_audit_record s LEFT JOIN sys_user u ON u.id=s.audit_id
+        WHERE s.apply_type= #{type} AND s.open_red_id=#{applyRedPackId}
+        order by s.create_time desc
+    </select>
+</mapper>

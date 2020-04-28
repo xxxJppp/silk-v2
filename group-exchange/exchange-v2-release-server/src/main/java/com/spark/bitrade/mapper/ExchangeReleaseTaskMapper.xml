@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.ExchangeReleaseTaskMapper">
+
+    <update id="updateReleaseTaskStatus">
+        update exchange_release_task
+        set release_status=#{newVal},update_time=now()
+        where id=#{id} and release_status=#{oldVal}
+    </update>
+</mapper>

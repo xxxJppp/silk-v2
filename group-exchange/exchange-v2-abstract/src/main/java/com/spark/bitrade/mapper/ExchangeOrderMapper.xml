@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.ExchangeOrderMapper">
+
+    <select id="queryOrder" resultType="com.spark.bitrade.entity.ExchangeOrder">
+      select * from exchange_order where order_id=#{orderId} and member_id =#{memberId}
+   </select>
+
+    <select id="historyOrders" resultType="com.spark.bitrade.entity.ExchangeOrder">
+      select * from exchange_order where member_id =#{memberId} and symbol=#{symbol} order by time desc
+   </select>
+
+    <select id="queryOrders" resultType="com.spark.bitrade.dto.ExchangeOrderDto">
+        select * from exchange_order where 1=1
+        <if test="memberId != null and memberId != ''">
+            and member_id=#{memberId}
+        </if>
+        <if test="symbol != null and symbol != ''">
+            and symbol=#{symbol}
+        </if>
+
+        <if test="coinSymbol != null and coinSymbol != ''">
+            and coin_symbol=#{coinSymbol}
+        </if>
+        <if test="baseSymbol != null and baseSymbol != ''">
+            and base_symbol=#{baseSymbol}
+        </if>
+        <if test="direction != null ">
+            and direction=#{direction}
+        </if>
+        <if test="status != null ">
+            and status=#{status}
+        </if>
+        <if test="status == null ">
+            and status!=0
+        </if>
+        <if test="startTime != null and startTime != ''">
+            and time <![CDATA[>=]]> #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and time <![CDATA[<]]> #{endTime}
+        </if>
+        order by time desc
+    </select>
+
+    <select id="findCurrentTradingCount" resultType="java.lang.Integer">
+        select count(*) cnt from exchange_order where member_id=#{memberId}
+        <if test="symbol != null and symbol != ''">
+            and symbol=#{symbol}
+        </if>
+        <if test="direction != null ">
+            and direction=#{direction}
+        </if>
+    </select>
+    <select id="stats" resultType="com.spark.bitrade.dto.ExchangeOrderStats">
+        select member_id, base_symbol,direction, count(*) trade_count, sum(turnover) trade_turnover
+        from exchange_order
+        where
+        coin_symbol=#{coinSymbol}
+
+        <if test="status != null and status==0">
+            and status=0
+        </if>
+        <if test="status != null and status==1">
+            and status > 0
+        </if>
+
+        <if test="type != null ">
+            and type=#{type}
+        </if>
+        <if test="startTime != null ">
+            and time <![CDATA[>=]]> #{startTime}
+        </if>
+        <if test="endTime != null ">
+            and time <![CDATA[<]]> #{endTime}
+        </if>
+        GROUP BY member_id,base_symbol,direction
+    </select>
+
+
+    <insert id="transferTo" parameterType="com.spark.bitrade.entity.ExchangeOrder">
+    insert into ${table} (
+      `order_id`,
+      `member_id`,
+      `amount`,
+      `direction`,
+      `price`,
+      `symbol`,
+      `type`,
+      `coin_symbol`,
+      `base_symbol`,
+      `status`,
+      `time`,
+      `completed_time`,
+      `canceled_time`,
+      `traded_amount`,
+      `validated`,
+      `turnover`,
+      `freeze_amount`
+    ) values (
+      #{order.orderId},
+      #{order.memberId},
+      #{order.amount},
+      #{order.direction},
+      #{order.price},
+      #{order.symbol},
+      #{order.type},
+      #{order.coinSymbol},
+      #{order.baseSymbol},
+      #{order.status},
+      #{order.time},
+      #{order.completedTime},
+      #{order.canceledTime},
+      #{order.tradedAmount},
+      #{order.validated},
+      #{order.turnover},
+      #{order.freezeAmount}
+    )
+  </insert>
+</mapper>

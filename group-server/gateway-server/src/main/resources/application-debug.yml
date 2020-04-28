@@ -1,0 +1,428 @@
+server:
+  port: 6610
+#server.context-path=/gapi
+
+spring:
+  application:
+    name: service-gateway2
+  session:
+    store-type: none
+  redis:
+    host: 127.0.0.1
+    password: Credit2016Admin
+    port: 6379
+    database: 0
+  jackson:
+    serialization:
+      indent_output: true
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  devtools:
+    restart:
+      enabled: true
+  http:
+    multipart:
+      enabled: true   # 启用http上传处理
+      max-file-size: 10MB # 设置单个文件的最大长度
+
+#eureka
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://172.16.0.100:8761/eureka/
+
+#ribbon超时设置
+#ReadTimeout 设置路由转发请求的时候，创建请求连接的超时时间
+#ConnectTimeout 用来设置路由转发请求的超时时间
+ribbon:
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+
+# test
+service-ucenter:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+btbank-server:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+bitrade-market:
+  ribbon:
+    ReadTimeout: 6000
+    ConnectTimeout: 6000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+service-otc:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+service-chat:
+  ribbon:
+    ReadTimeout: 6000
+    ConnectTimeout: 6000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+service-account:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+service-lock-v2:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+service-lock-slp:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+service-payment:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+service-exchange-v2:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+support-coin-server:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+member-server:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+lucky-treasure-server:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+festival-activites:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+otc-server:
+  ribbon:
+    ReadTimeout: 11000
+    ConnectTimeout: 11000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+ticker:
+  ribbon:
+    ReadTimeout: 6000
+    ConnectTimeout: 6000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+#hystrix超时配置
+#设置API网关中路由转发请求的HystrixCommand执行超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    service-ucenter:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    btbank-server:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+    bitrade-market:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+    service-otc:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    service-chat:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    service-account:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    service-lock-v2:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    service-lock-slp:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    service-payment:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    service-exchange-v2:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    support-coin-server:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    member-server:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    lucky-treasure-server:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    festival-activites:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    otc-server:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    ticker:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+### zuul.routes 网管api配置
+## zuul.ratelimit 限流配置
+#限流类型：url、origin、user
+zuul:
+  routes:
+    uc2:
+      serviceId: service-ucenter
+      path: /uc2/api/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    btbank:
+      serviceId: btbank-server
+      path: /btbank/api/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    market:
+      serviceId: bitrade-market
+      path: /market/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    otc:
+      serviceId: service-otc
+      path: /otc/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    chat:
+      serviceId: service-chat
+      path: /chat/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    acct:
+      serviceId: service-account
+      path: /acct/api/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    lock2:
+      serviceId: service-lock-v2
+      path: /lock2/api/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    lock-slp:
+      serviceId: service-lock-slp
+      path: /lock-slp/api/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    payment:
+      serviceId: service-payment
+      path: /payment/api/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    exchange2:
+      serviceId: service-exchange-v2
+      path: /exchange2/api/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    support-coin:
+      serviceId: support-coin-server
+      path: /supportApi/api/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    member-server:
+      serviceId: member-server
+      path: /memberApi/api/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    lucky-treasure-server:
+      serviceId: lucky-treasure-server
+      path: /luckyTreasureApi/api/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    festival-activites:
+      serviceId: festival-activites
+      path: /newYearApi/api/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    otc-server:
+      serviceId: otc-server
+      path: /otcServerApi/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    ticker:
+      serviceId: ticker
+      path: /ticker/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+  ratelimit:
+    enabled: true
+    repository: REDIS
+    policies:
+      uc2:
+        limit: 100
+        refresh-interval: 60
+        type: url
+      btbank:
+        limit: 100
+        refresh-interval: 60
+        type: url
+      market:
+        limit: 100
+        refresh-interval: 60
+        type: url
+      otc:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+      chat:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+      acct:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+      lock2:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+      lock-slp:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+      payment:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+      exchange2:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+      support-coin:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+      member-server:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+      lucky-treasure-server:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+      festival-activites:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+      otc-server:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+      ticker:
+        limit: 100
+        refresh-interval: 60
+        type: url,origin
+#需忽略签名校验的uri列表
+sign:
+  requestUri:
+    ignoreList:
+      - /otc/reg/check
+      - /otc/healthy
+      - /uc2/healthy
+      - /uc2/api/v2/login
+      - /uc2/api/v2/check/login
+      - /uc2/api/v2/register/phone/code
+      - /uc2/api/v2/register/email
+      - /uc2/api/v2/member/promotion/record
+      - /uc2/api/v2/register/check/username
+      - /uc2/api/v2/support/country
+      - /uc2/api/v2/register/phone

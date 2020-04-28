@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.IncubatorsBasicInformationMapper">
+    <select id="getIncubatorsBasicInformationByMemberId"
+            resultType="com.spark.bitrade.dto.IncubatorsBasicInformationDto">
+        SELECT
+            id,
+            pro_name,
+            community_name,
+            contact_person,
+            pro_desc,
+            tel_phone,
+            wechat_num,
+            wechat_code,
+            lock_up_num,
+            member_id,
+            `status`
+        FROM
+            incubators_basic_information
+        WHERE
+            member_id = #{memberId }
+        AND STATUS IN (0, 1, 2) order by id desc
+        LIMIT 1;
+    </select>
+    <update id="updateIncubatorsBasicInformation">
+        update incubators_basic_information set lock_up_num=lock_up_num+#{num } where id=#{id };
+    </update>
+</mapper>

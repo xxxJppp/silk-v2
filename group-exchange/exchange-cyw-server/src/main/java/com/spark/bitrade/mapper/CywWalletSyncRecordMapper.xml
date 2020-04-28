@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.CywWalletSyncRecordMapper">
+
+    <select id="sum" resultType="com.spark.bitrade.entity.dto.WalletSyncCountDto">
+        SELECT
+        SUM(sum_amount) amount,
+        SUM(increased_amount) increment,
+        SUM(sum_frozen_amount) frozen
+        FROM cyw_wallet_sync_record
+        WHERE member_id=#{memberId}
+        and coin_unit=#{coinUnit}
+        <if test="startTime != null">
+            and create_time <![CDATA[>=]]> #{startTime}
+        </if>
+        and create_time <![CDATA[<=]]> #{endTime}
+    </select>
+    <select id="getNewest" resultType="com.spark.bitrade.entity.CywWalletSyncRecord">
+        select * from cyw_wallet_sync_record
+        where
+            member_id=#{memberId}
+            and coin_unit=#{coinUnit}
+        order by create_time desc
+        limit 1
+    </select>
+</mapper>

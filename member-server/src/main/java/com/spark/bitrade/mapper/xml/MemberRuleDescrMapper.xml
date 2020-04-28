@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.MemberRuleDescrMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.bitrade.entity.MemberRuleDescr">
+        <id column="id" property="id" />
+        <result column="rule_type" property="ruleType" />
+        <result column="content_zh" property="contentZh" />
+        <result column="content_zh_tw" property="contentZhTw" />
+        <result column="content_en" property="contentEn" />
+        <result column="content_ko" property="contentKo" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, rule_type, content_zh, content_zh_tw, content_en, content_ko, create_time, update_time
+    </sql>
+
+</mapper>

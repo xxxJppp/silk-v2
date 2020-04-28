@@ -1,0 +1,45 @@
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection).
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+#对外暴露的接口测试
+POST http://127.0.0.1:6610/acct/api/v2/tas01/t1
+Content-Type: application/x-www-form-urlencoded
+appId:1
+apiKey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIwIiwiaXNzIjoidWNlbnRlci1hcGkiLCJleHAiOjE1NjQwNDk4NDEsInVzZXJJZCI6NzA2NTMsImlhdCI6MTU2Mjc1Mzg0MSwidXNlcm5hbWUiOiJkYXJpbmc1OTIwIn0.BpkHH4n1LXZ6DxZx69kwAAlPxtHxagBMq3xCap_QFds
+apiTime:1562753866113
+apiSign:3440E25EB494B24608E54ACEE6A9B929
+
+data=3G63nMAXjKCd0gRgHgRh%2Bxgxvd8nLGsx
+
+###
+
+
+#明文调用
+#POST http://127.0.0.1:6610/acct/api/v2/tas01/no-auth/t1
+#POST http://api.400.pro/lock-slp/api/v2/lockSlp/listActivities
+POST http://api.400.pro/lock-slp/api/v2/lockSlp/no-auth/listActivities
+Content-Type: application/x-www-form-urlencoded
+appId:1
+apiKey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ4eHh4IiwiYXVkIjoiMTIzIiwiaXNzIjoidWNlbnRlci1hcGkiLCJleHAiOjE1NjIxMzQ0NzcsInVzZXJJZCI6NzE2MzksImlhdCI6MTU2MDgzODQ3NywidXNlcm5hbWUiOiIxIn0.bqZsADX1mxSo7i2FJf1CUiFsPQohe7idI5qPJFIVZ8w
+
+coin=test2
+
+###
+
+
+# 不对外暴露的接口，响应报404
+POST http://127.0.0.1:6610/acct/v2/coin/no-auth/t1
+Content-Type: application/x-www-form-urlencoded
+
+###
+
+
+# 不对外暴露的接口，响应报404
+GET http://127.0.0.1:6610/lock-slp/api/v2/lockSlp/unencrypt/listActivities2
+Content-Type: application/x-www-form-urlencoded
+
+###

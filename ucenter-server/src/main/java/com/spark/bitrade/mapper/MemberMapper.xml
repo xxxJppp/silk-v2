@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.MemberMapper">
+    <select id="getInvitationRecord" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select id from member where inviter_id = #{memberId}
+    </select>
+
+    <select id="getInvitationRecordIdInInviterId" resultType="java.lang.Long">
+        SELECT id
+            from member
+            WHERE inviter_id IN
+            <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+    </select>
+
+
+    <select id="getInvitationRecordPage" resultType="com.spark.bitrade.entity.MemberVo">
+        SELECT m.id, m.username, m.registration_time
+        from member m
+        WHERE id IN
+        <foreach collection="idList" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        order by m.registration_time desc
+    </select>
+
+</mapper>

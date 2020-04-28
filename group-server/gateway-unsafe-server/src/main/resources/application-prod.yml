@@ -1,0 +1,118 @@
+server:
+  port: 6620
+#server.context-path=/gapi
+
+spring:
+  application:
+    name: service-gateway2-unsafe
+  session:
+    store-type: none
+  redis:
+    host: 172.31.50.183
+    password: ENC(SXuWnz79A4slMYdgrHNIwMLzSEameA/o)
+    port: 6379
+    database: 0
+    timeout: 1000000
+    maxTotal: 500
+    pool:
+      max-idle: 20
+      min-idle: 20
+      max-active: 200
+      max-wait: 1000
+  jackson:
+    serialization:
+      indent_output: true
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  http:
+      multipart:
+        enabled: true   # 启用http上传处理
+        max-file-size: 10MB # 设置单个文件的最大长度
+
+#eureka
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://172.31.48.134:7000/eureka/,http://172.31.48.120:7000/eureka/
+
+#ribbon超时设置
+#ReadTimeout 设置路由转发请求的时候，创建请求连接的超时时间
+#ConnectTimeout 用来设置路由转发请求的超时时间
+ribbon:
+  ReadTimeout: 11000
+  ConnectTimeout: 11000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+
+# test
+service-ucenter:
+  ribbon:
+    ReadTimeout: 21000
+    ConnectTimeout: 21000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+bitrade-market:
+  ribbon:
+    ReadTimeout: 6000
+    ConnectTimeout: 6000
+    MaxAutoRetries: 0
+    MaxAutoRetriesNextServer: 1
+    eureka:
+      enabled: true
+
+#hystrix超时配置
+#设置API网关中路由转发请求的HystrixCommand执行超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+    service-ucenter:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+    bitrade-market:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
+### zuul.routes 网管api配置
+## zuul.ratelimit 限流配置
+#限流类型：url、origin、user
+zuul:
+  routes:
+    uc2:
+      serviceId: service-ucenter
+      path: /uc2/api/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+    market:
+      serviceId: bitrade-market
+      path: /market/**
+      stripPrefix: false
+      customSensitiveHeaders: true
+  ratelimit:
+    enabled: true
+    repository: REDIS
+    policies:
+      uc2:
+        limit: 240
+        refresh-interval: 60
+        type: url,origin
+      market:
+        limit: 240
+        refresh-interval: 60
+        type: url,origin
+
+#需忽略签名校验的uri列表
+sign:
+  requestUri:
+    ignoreList:
+      - /otc/reg/check
+      - /otc/healthy

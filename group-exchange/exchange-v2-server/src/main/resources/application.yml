@@ -1,0 +1,39 @@
+#环境配置 dev=开发环境/test=测试环境/prod=生产环境
+spring:
+  profiles:
+    active: dev
+
+## 币币交易活动转发策略配置
+exchange:
+  forward:
+    strategys:
+      # 交易对：活动策略
+      SLU/BTC1:
+        #        symbol: SLU/BTC
+        strategyId:
+      VATH/USDT:
+        strategyId: v
+        applicationName: service-exchange-v2-vath
+        serverContextPath: exchange2-vath
+        enablePlaceBuy: true
+        enablePlaceSell: true
+        enableCancelOrderBuy: true
+        enableCancelOrderSell: true
+        enableCompleteOrderBuy: true
+        enableCompleteOrderSell: true
+        enableTradeBuy: true
+        enableTradeSell: true
+      ESP/USDT:
+        strategyId: r
+        applicationName: service-exchange-v2-release
+        serverContextPath: exchange2-release
+        enablePlaceBuy: true
+        enablePlaceSell: true
+        enableCancelOrderBuy: true
+        enableCancelOrderSell: true
+        enableCompleteOrderBuy: true
+        enableCompleteOrderSell: true
+        enableTradeBuy: true
+        enableTradeSell: true
+
+

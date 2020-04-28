@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.SupportSectionManageMapper">
+
+    <select id="findSectionRecords" resultType="com.spark.bitrade.vo.SupportSectionManageVo">
+
+        SELECT
+        suca.`name`,
+        ssm.current_section,
+        ssm.target_section,
+        ssm.create_time,
+        ssm.remark,
+        ssm.audit_status,
+        ssm.audit_opinion,
+        ssm.audit_time
+        FROM
+        support_section_manage ssm
+        LEFT JOIN support_up_coin_apply suca ON suca.id = ssm.up_coin_id
+        WHERE ssm.member_id=#{memberId}
+        <if test="param.currentSection!=null">
+          AND ssm.current_section=#{param.currentSection}
+        </if>
+        <if test="param.targetSection!=null">
+            AND ssm.target_section=#{param.targetSection}
+        </if>
+        <if test="param.auditStatus!=null">
+            AND ssm.audit_status=#{param.auditStatus}
+        </if>
+        <if test="param.startTime!=null and param.startTime!=''">
+            AND ssm.create_time <![CDATA[>=]]> #{param.startTime}
+        </if>
+        <if test="param.endTime!=null and param.endTime!=''">
+            AND ssm.create_time <![CDATA[<=]]>  #{param.endTime}
+        </if>
+
+        ORDER BY ssm.create_time DESC
+
+    </select>
+</mapper>

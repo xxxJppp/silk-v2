@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>bitrade-parent-v2</artifactId>
+        <groupId>com.spark.bitrade</groupId>
+        <version>2.0.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ticker</artifactId>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.spark.bitrade</groupId>
+            <artifactId>enum-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.spark.bitrade</groupId>
+            <artifactId>common-web-server</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.spark.bitrade</groupId>
+            <artifactId>kafka-wapper</artifactId>
+        </dependency>
+
+        <!-- 依赖redis封装类 -->
+        <dependency>
+            <groupId>com.spark.bitrade</groupId>
+            <artifactId>redis-wapper</artifactId>
+        </dependency>
+
+        <!-- 添加feign核心依赖 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.28</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <finalName>ticker</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

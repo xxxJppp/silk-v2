@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.SuperAwardRecordMapper">
+
+    <select id="findSuperAwards" resultType="com.spark.bitrade.dto.SuperAwardDto">
+
+        SELECT
+        t.member_id AS memberId,
+        ROUND(SUM(t.fee)*${rate},8) AS awardFee,
+        t.symbol AS coinUnit,
+        spc.member_id AS partnerId,
+        SUM(t.amount) AS totalAmount
+        FROM
+        member_transaction t
+        LEFT JOIN super_member_community sc ON t.member_id = sc.member_id  AND sc.`status`=0
+        LEFT JOIN super_partner_community spc ON spc.id = sc.community_id AND spc.equity_status=0 AND spc.usable=1
+        WHERE
+        t.create_time <![CDATA[>=]]> #{startDate}
+        AND t.create_time <![CDATA[<=]]> #{endDate}
+        AND t.member_id NOT IN
+        <foreach collection="exitIds" index="index" item="item"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        <if test="wardPids!=null and wardPids.size>0">
+            AND CONCAT(t.member_id,t.symbol) NOT IN
+            <foreach collection="wardPids" index="index" item="item"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        AND spc.member_id IS NOT NULL
+        AND t.type=#{transationType}
+        GROUP BY
+        t.member_id,
+        t.symbol
+
+    </select>
+    <select id="findBBExchangeTotal" resultType="com.spark.bitrade.dto.SuperAwardDto">
+        SELECT k.memberId,ROUND(SUM(k.totalAmount),8) AS totalAmount ,'CNY',k.partnerId FROM (
+        SELECT
+        eo.member_id memberId,
+        CASE eo.base_symbol
+        WHEN 'USDT' THEN
+        ROUND(SUM(eo.turnover) * 7,8)
+        WHEN 'BT' THEN
+        ROUND(SUM(eo.turnover) * 1,8)
+        ELSE 0
+        END AS totalAmount,
+        eo.base_symbol baseCoin,
+        spc.member_id partnerId
+        FROM
+        exchange_order eo
+        LEFT JOIN super_member_community smc ON eo.member_id = smc.member_id
+        AND smc.`status` = 0
+        LEFT JOIN super_partner_community spc ON spc.id = smc.community_id
+        AND spc.usable = 1
+        WHERE
+        eo.completed_time <![CDATA[<=]]> #{end}
+        AND eo.completed_time <![CDATA[>=]]> #{start}
+        AND eo.member_id NOT IN
+        <foreach collection="exitIds" index="index" item="item"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND eo.symbol != 'CNYT/BT'
+        AND spc.member_id IS NOT NULL
+        GROUP BY
+        eo.base_symbol,
+        eo.member_id) k
+        GROUP BY k.memberId
+
+    </select>
+</mapper>

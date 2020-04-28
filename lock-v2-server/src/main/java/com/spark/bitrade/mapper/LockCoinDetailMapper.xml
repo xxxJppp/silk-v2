@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.LockCoinDetailMapper">
+
+    <!-- 根据id修改返佣状态(未返佣-》已返佣) -->
+    <update id="updateRewardStatusToCompleteById" parameterType="java.lang.Long">
+        update lock_coin_detail set lock_reward_satus = 2 where id = #{id} and lock_reward_satus = 1
+    </update>
+
+    <!-- 根据id修改状态 -->
+    <update id="updateStatusById">
+        update lock_coin_detail set status = #{newStatus} where id = #{id} and status = #{oldStatus}
+    </update>
+
+    <!-- 根据id修改状态和备注 -->
+    <update id="updateStatusAndRemarkById">
+        update lock_coin_detail set status = #{newStatus},remark=#{remark} where id = #{id} and status = #{oldStatus}
+    </update>
+
+    <!--当前有效的活动数量-->
+    <select id="countValidLockCoinDetail" resultType="java.lang.Integer">
+        select count(*) cnt from lock_coin_detail where member_id=#{memberId} and type=#{lockType} and status=0
+    </select>
+
+    <!--当日参与活动的次数-->
+    <select id="countLockCoinDetailInDay" resultType="java.lang.Integer">
+        select count(*) cnt from lock_coin_detail where member_id=#{memberId} and type=#{lockType} and date(lock_time)=date(NOW())
+    </select>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.MemberFeeDayStatMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.bitrade.entity.MemberFeeDayStat">
+        <id column="id" property="id" />
+        <result column="statistic_date" property="statisticDate" />
+        <result column="unit" property="unit" />
+        <result column="buy_unit_quantity" property="buyUnitQuantity" />
+        <result column="lock_unit_quantity" property="lockUnitQuantity" />
+        <result column="buy_count" property="buyCount" />
+        <result column="lock_count" property="lockCount" />
+        <result column="buy_commision" property="buyCommision" />
+        <result column="lock_commision" property="lockCommision" />
+        <result column="unlock_unit_quantity" property="unlockUnitQuantity" />
+        <result column="version" property="version" />
+        <result column="create_time" property="createTime" />
+        <result column="last_update_time" property="lastUpdateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, statistic_date, unit, buy_unit_quantity, lock_unit_quantity, buy_count, lock_count, buy_commision, lock_commision, unlock_unit_quantity, version, create_time, last_update_time
+    </sql>
+</mapper>

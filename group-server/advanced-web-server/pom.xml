@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>group-server</artifactId>
+        <groupId>com.spark.bitrade</groupId>
+        <version>2.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>advanced-web-server</artifactId>
+    <description>基于common-web-server，提供数据库、redis、kafka等服务</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.spark.bitrade</groupId>
+            <artifactId>common-web-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.spark.bitrade</groupId>
+            <artifactId>kafka-wapper</artifactId>
+        </dependency>
+
+        <!-- 数据库相关依赖 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.spark.bitrade</groupId>
+            <artifactId>druid-wapper</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <!-- 数据库相关依赖 -->
+
+    </dependencies>
+
+    <build>
+        <finalName>advanced-web-server</finalName>
+        <plugins>
+        </plugins>
+    </build>
+</project>

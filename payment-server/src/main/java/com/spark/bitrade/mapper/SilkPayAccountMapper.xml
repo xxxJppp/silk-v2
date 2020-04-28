@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.SilkPayAccountMapper">
+
+
+    <select id="findMostSuitableAccount" resultType="com.spark.bitrade.entity.dto.SilkPayAccountDto">
+        SELECT
+            s.*, ROUND(
+                6378.138 * 2 * ASIN(
+                    SQRT(
+                        POW(
+                            SIN(
+                                (
+                                    #{gpsLocation.latitude} * PI() / 180 - s.site_lat * PI() / 180
+                                ) / 2
+                            ),
+                            2
+                        ) + COS(#{gpsLocation.latitude} * PI() / 180) * COS(s.site_lat * PI() / 180) * POW(
+                            SIN(
+                                (
+                                    #{gpsLocation.longitude} * PI() / 180 - s.site_lon * PI() / 180
+                                ) / 2
+                            ),
+                            2
+                        )
+                    )
+                ) * 1000
+            ) AS distance
+        FROM
+            silk_pay_account s
+        WHERE
+            s.type = #{payType}
+        AND s.quota_surplus >= #{amount}
+        AND s.quota_single >= #{amount}
+        AND s.total_usable > s.total_already
+        AND s.number_usable > number_already
+        AND s.state= 1
+        AND s.enabled = 1
+        AND NOT EXISTS (
+            SELECT
+                match_account
+            FROM
+                silk_pay_match_record spmr
+            WHERE
+                spmr.state = 1
+            AND spmr.match_account = s.id
+        )
+        AND EXISTS (
+            SELECT
+                serial_no
+            FROM
+                silk_pay_device spd
+            WHERE
+                spd.state = 1
+            AND spd.id = s.device_id
+        )
+        ORDER BY
+            distance ASC,
+            s.quota_single DESC,
+            s.quota_split DESC
+    </select>
+
+
+    <select id="findMatchRecordDeviceSerialNo" resultType="java.lang.String">
+        SELECT
+            spd.serial_no
+        FROM
+            silk_pay_device spd
+        LEFT JOIN silk_pay_account spa ON spd.id = spa.device_id
+        LEFT JOIN silk_pay_match_record spmr ON spmr.match_account = spa.id
+        WHERE
+            spmr.id = #{id}
+    </select>
+
+
+    <update id="resetSurplus">
+        UPDATE silk_pay_account
+        SET quota_surplus = quota_daily,
+         number_already = 0,
+         quota_relieve = date_format(date_add(NOW(), interval 1 day), '%Y-%m-%d 00:00:00')
+        WHERE
+            quota_relieve <![CDATA[<= ]]> NOW()
+    </update>
+</mapper>

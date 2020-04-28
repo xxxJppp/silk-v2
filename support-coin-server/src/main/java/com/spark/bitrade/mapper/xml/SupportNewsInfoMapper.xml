@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.SupportNewsInfoMapper">
+
+    <select id="findListBymemberIdAndupCoinId" resultType="com.spark.bitrade.entity.SupportNewsInfo">
+        SELECT * FROM (
+            SELECT
+            *
+            FROM
+            (
+            SELECT
+            *
+            FROM
+            support_news_info s
+            ORDER BY
+            create_time DESC
+            ) k
+
+            GROUP BY
+            k.group_id
+            order by k.audit_status asc ) a
+        <where>
+            AND a.member_id=#{memberId}
+            AND a.up_coin_id=#{upCoinId}
+            <if test="seacthParam.titile!=null and seacthParam.titile!=''">
+                AND a.title LIKE CONCAT('%',#{seacthParam.titile},'%')
+            </if>
+            <if test="seacthParam.auditStatus!=null">
+                AND a.audit_status = #{seacthParam.auditStatus}
+            </if>
+            <if test="seacthParam.startTime!=null and seacthParam.startTime!=''">
+                AND a.create_time <![CDATA[>=]]> #{seacthParam.startTime}
+            </if>
+            <if test="seacthParam.endTime!=null and seacthParam.endTime!=''">
+                AND a.create_time <![CDATA[<=]]> #{seacthParam.endTime}
+            </if>
+            <if test="seacthParam.updateStartTime!=null and seacthParam.updateStartTime!=''">
+                AND a.update_time <![CDATA[>=]]> #{seacthParam.updateStartTime}
+            </if>
+            <if test="seacthParam.updateEndTime!=null and seacthParam.updateEndTime!=''">
+                AND a.update_time <![CDATA[<=]]> #{seacthParam.updateEndTime}
+            </if>
+        </where>
+        ORDER BY a.create_time DESC
+    </select>
+</mapper>

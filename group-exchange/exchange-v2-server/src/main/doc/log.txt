@@ -1,0 +1,41 @@
+
+2019-11-20
+  吃单、挂单手续费
+    * exchange_coin 表配置吃单、挂单手续费
+        + fee_entrust_buy_discount 挂单：买币手续费的折扣率
+        + fee_entrust_sell_discount 挂单：卖币手续费的折扣率
+    * exchange_member_discount_rule 表配置吃单、挂单手续费
+        + fee_entrust_buy_discount 挂单：买币手续费的折扣率
+        + fee_entrust_sell_discount 挂单：卖币手续费的折扣率
+
+
+
+接口升级说明
+必须调整：
+1、余额接口，文档：http://172.16.0.79:6303/exchange2/swagger-ui.html#/exchange-wallet-controller
+   /exchange2/api/v2/wallet/asset  获取指定币种的可用余额数据接口
+
+建议升级到v2的接口，文档： http://172.16.0.79:6303/exchange2/swagger-ui.html#/exchange-order-controller
+1、下单接口
+   /exchange2/api/v2/order/place  委托订单接口
+   备注：新增“tradeCaptcha（交易验证码）”参数
+   原接口：/exchange/order/add
+2、撤单接口
+  /exchange2/api/v2/order/cancelOrder 申请撤销申请接口
+  注意：url传参修改为参数传参了
+  原接口：/exchange/order/cancel/{orderId}
+3、当前委托接口
+  /exchange2/api/v2/order/openOrders  分页查询交易中的订单数据接口
+  备注：没有返回交易明细数据
+  原接口：/exchange/order/current
+4、历史委托接口
+  /exchange2/api/v2/order/historyOrders  分页查询历史订单数据接口
+  备注：没有返回交易明细数据
+  原接口：/exchange/order/history
+5、交易明细接口（新增）
+  /exchange2/api/v2/order/listTradeDetail  查询订单的撮合明细记录接口
+  原接口：/exchange/order/detail/{orderId}
+
+6、订单及明细接口
+  /api/v2/order/queryOrderDetail 查询订单接口
+  原接口：/exchange/order/orderInfo

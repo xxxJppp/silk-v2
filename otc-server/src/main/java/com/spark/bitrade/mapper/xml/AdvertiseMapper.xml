@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.AdvertiseMapper">
+
+    <resultMap type="com.spark.bitrade.entity.Advertise" id="AdvertiseMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="advertiseType" column="advertise_type" jdbcType="INTEGER"/>
+        <result property="auto" column="auto" jdbcType="INTEGER"/>
+        <result property="autoword" column="autoword" jdbcType="VARCHAR"/>
+        <result property="coinUnit" column="coin_unit" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="dealAmount" column="deal_amount" jdbcType="OTHER"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+        <result property="limitMoney" column="limit_money" jdbcType="VARCHAR"/>
+        <result property="maxLimit" column="max_limit" jdbcType="OTHER"/>
+        <result property="minLimit" column="min_limit" jdbcType="OTHER"/>
+        <result property="number" column="number" jdbcType="OTHER"/>
+        <result property="payMode" column="pay_mode" jdbcType="VARCHAR"/>
+        <result property="premiseRate" column="premise_rate" jdbcType="OTHER"/>
+        <result property="price" column="price" jdbcType="OTHER"/>
+        <result property="priceType" column="price_type" jdbcType="INTEGER"/>
+        <result property="remainAmount" column="remain_amount" jdbcType="OTHER"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="timeLimit" column="time_limit" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="coinId" column="coin_id" jdbcType="INTEGER"/>
+        <result property="country" column="country" jdbcType="VARCHAR"/>
+        <result property="memberId" column="member_id" jdbcType="INTEGER"/>
+        <result property="needBindPhone" column="need_bind_phone" jdbcType="INTEGER"/>
+        <result property="needPutonDiscount" column="need_puton_discount" jdbcType="INTEGER"/>
+        <result property="needRealname" column="need_realname" jdbcType="INTEGER"/>
+        <result property="needTradeTimes" column="need_trade_times" jdbcType="INTEGER"/>
+        <result property="maxTradingOrders" column="max_trading_orders" jdbcType="INTEGER"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+    </resultMap>
+    <update id="putOffAdvertise">
+        update advertise a set a.status=1,a.remain_amount=0,a.number=0
+        <where>
+            a.status=0
+            AND a.remain_amount=#{remainAmount}
+            AND a.id=#{id}
+        </where>
+    </update>
+    <update id="updateMemberAdvertise">
+        UPDATE advertise SET `status` = #{newType} WHERE currency_id != #{currencyId} AND member_id = #{memberId} AND `status` = #{oldType}
+    </update>
+    <update id="reUpdateMemberAdvertise">
+         UPDATE advertise SET `status` = #{newType} WHERE currency_id = #{currencyId} AND member_id = #{memberId} AND `status` = #{oldType}
+    </update>
+    <select id="getAllAdvertiseByMemberId" resultType="com.spark.bitrade.entity.vo.AdvertiseVo">
+        SELECT
+        a.id,
+        a.advertise_type advertiseType,
+        a.coin_unit coinUnit,
+        a.min_limit minLimit,
+        a.max_limit maxLimit,
+        a.`status`,
+        a.remain_amount remainAmount,
+        a.coin_id coinId,
+        a.price price,
+        a.create_time createTime,
+        a.price_type priceType,
+        a.premise_rate premiseRate,
+        c.id currencyId,
+        c.`name` currencyName,
+        c.unit currencyUnit,
+        c.symbol currencySymbol
+        FROM
+        advertise a
+        LEFT JOIN currency_manage c ON c.id = a.currency_id
+        <where>
+        a.status != 2
+            <if test="memberId != null and memberId != 0">
+                AND a.member_id = #{memberId}
+            </if>
+        </where>
+        ORDER BY a.id DESC
+        LIMIT #{start},#{pageSize}
+    </select>
+    <select id="getAllAdvertiseNumByMemberId" resultType="java.lang.Long">
+        SELECT
+        COUNT(1)
+        FROM
+        advertise a
+        <where>
+            a.status != 2
+            <if test="memberId != null and memberId != 0">
+                AND a.member_id = #{memberId}
+            </if>
+        </where>
+    </select>
+    <select id="getDetail" resultType="com.spark.bitrade.entity.vo.MemberAdvertiseDetail">
+        SELECT
+            a.id,
+            a.coin_id,
+            c.`name` coinName,
+            c.name_cn coinNameCn,
+            c.unit coinUnit,
+            cm.`name` currencyName,
+            cm.symbol currencySymbol,
+            cm.unit currencyUnit,
+            a.price,
+            a.price_type,
+            a.advertise_type,
+            a.min_limit,
+            a.max_limit,
+            a.remark,
+            a.time_limit,
+            a.premise_rate,
+            a.pay_mode,
+            a.`status`,
+            a.number,
+            a.auto,
+            a.autoword,
+            a.need_bind_phone,
+            a.need_realname,
+            a.need_trade_times,
+            a.need_puton_discount,
+            a.max_trading_orders
+        FROM
+            advertise a
+        LEFT JOIN otc_coin c ON a.coin_id = c.id
+        LEFT JOIN currency_manage cm ON a.currency_id = cm.id
+        WHERE
+            a.id = #{id}
+    </select>
+    <select id="getPageAdvertiseRank" resultType="com.spark.bitrade.entity.vo.OtcAdvertise">
+        SELECT
+        a.country countryName,
+        a.id advertiseId,
+        a.advertise_type advertiseType,
+        a.min_limit minLimit,
+        a.max_limit maxLimit,
+        a.remain_amount remainAmount,
+        a.create_time createTime,
+        a.pay_mode payMode,
+        a.coin_id coinId,
+        a.coin_unit unit,
+        a.coin_unit coinName,
+        a.need_bind_phone needBindPhone,
+        a.need_realname needRealname,
+        a.need_trade_times needTradeTimes,
+        a.price_type priceType,
+        a.premise_rate premiseRate,
+        a.max_trading_orders maxTradingOrders,
+        c.`name` currencyName,
+        c.unit currencyUnit,
+        c.symbol currencySymbol,
+        (
+        CASE a.price_type
+        WHEN 0 THEN
+        a.price
+        ELSE
+        round(((a.premise_rate + 100) / 100 * #{marketPrice}), #{coinScale})
+        END
+        ) price,
+        b.avatar,
+        b.username memberName,
+        b.member_level level,
+        b.transactions,
+        a.member_id memberId,
+        a.sort
+        FROM
+        advertise a
+        JOIN member b ON a.member_id = b.id
+        <if test="advertise.coinId != null">
+            AND a.coin_id = #{advertise.coinId}
+        </if>
+        <if test="advertise.currencyId != null">
+            AND a.currency_id = #{advertise.currencyId}
+        </if>
+        AND a.advertise_type = #{advertise.advertiseType}
+        AND a.`status` = #{advertise.status}
+        LEFT JOIN currency_manage c ON a.currency_id = c.id
+        ORDER BY
+        sort DESC,
+        <if test="advertiseRankType==0">
+            price
+        </if>
+        <if test="advertiseRankType==1">
+            a.remain_amount
+        </if>
+        <if test="advertiseRankType==2">
+            b.transactions
+        </if>
+        <if test="isPositive==0">
+            DESC
+        </if>
+        ,b.member_level DESC
+        LIMIT #{start},#{pageSize}
+    </select>
+    <select id="getPageAdvertiseNum" resultType="java.lang.Long">
+        SELECT
+        COUNT(1)
+        FROM
+        advertise a
+        JOIN member b ON a.member_id = b.id
+        AND a.advertise_type = #{advertise.advertiseType}
+        AND a.`status` = #{advertise.status}
+
+        <if test="advertise.coinId != null">
+            AND a.coin_id = #{advertise.coinId}
+        </if>
+        <if test="advertise.memberId != null">
+            AND a.member_id = #{advertise.memberId}
+        </if>
+
+        <if test="advertise.currencyId != null">
+            AND a.currency_id = #{advertise.currencyId}
+        </if>
+    </select>
+    <select id="getPageAdvertise" resultType="com.spark.bitrade.entity.vo.OtcAdvertise">
+        SELECT
+        a.country countryName,
+        a.id advertiseId,
+        a.advertise_type advertiseType,
+        a.min_limit minLimit,
+        a.max_limit maxLimit,
+        a.remain_amount remainAmount,
+        a.create_time createTime,
+        a.pay_mode payMode,
+        a.coin_id coinId,
+        a.coin_unit unit,
+        a.coin_unit coinName,
+        a.need_bind_phone needBindPhone,
+        a.need_realname needRealname,
+        a.need_trade_times needTradeTimes,
+        c.`name` currencyName,
+        c.unit currencyUnit,
+        c.symbol currencySymbol,
+        a.price_type priceType,
+        (
+        CASE a.price_type
+        WHEN 0 THEN
+        a.price
+        ELSE
+        round(((a.premise_rate + 100) / 100 * #{marketPrice}), #{coinScale})
+        END
+        ) price,
+        b.avatar,
+        b.username memberName,
+        b.member_level level,
+        b.transactions,
+        a.member_id memberId,
+        a.sort
+        FROM
+        advertise a
+        JOIN member b ON a.member_id = b.id
+        <if test="advertise.coinId != null">
+            AND a.coin_id = #{advertise.coinId}
+        </if>
+        <if test="advertise.memberId != null">
+            AND a.member_id = #{advertise.memberId}
+        </if>
+
+        <if test="advertise.currencyId != null">
+            AND a.currency_id = #{advertise.currencyId}
+        </if>
+        AND a.advertise_type = #{advertise.advertiseType}
+        AND a.`status` = #{advertise.status}
+        LEFT JOIN currency_manage c ON a.currency_id = c.id
+        ORDER BY
+        a.member_id not in(74655,74657,74654,103369),
+        a.country,
+        a.remain_amount DESC,
+        price
+        <if test="advertise.advertiseType==0">
+            DESC
+        </if>
+        ,b.transactions
+        LIMIT #{start},#{pageSize}
+    </select>
+    <select id="selectSellAutoOffShelves" resultType="com.spark.bitrade.entity.Advertise">
+        SELECT b.*
+        FROM
+            (SELECT
+                a.*,
+                CAST(a.min_limit / (CASE a.price_type WHEN 0 THEN a.price ELSE round(((a.premise_rate + 100) / 100 * #{marketPrice}),2) END ) AS DECIMAL (18, 8) ) minWithdrawAmount
+            FROM
+                advertise a
+            WHERE
+                a.`status` = 0
+                AND a.advertise_type = 1
+                AND a.coin_id = #{coinId}
+                AND a.currency_id = #{currencyId}
+            ) b
+        WHERE
+            b.remain_amount &lt; ROUND(((#{jyRate} + 100) / 100 * b.minWithdrawAmount),8)
+    </select>
+    <select id="selectBuyAutoOffShelves" resultType="com.spark.bitrade.entity.Advertise">
+        SELECT
+            b.*
+        FROM
+            (SELECT
+                a.*, CAST(a.min_limit / (CASE a.price_type WHEN 0 THEN a.price ELSE round(((a.premise_rate + 100) / 100 * #{marketPrice}),2) END) AS DECIMAL (18, 8)) minWithdrawAmount
+            FROM
+                advertise a
+            WHERE
+                a.`status` = 0
+                AND a.advertise_type = 0
+                AND a.coin_id = #{coinId}
+                AND a.currency_id = #{currencyId}
+            ) b
+        WHERE
+            b.remain_amount &lt; b.minWithdrawAmount
+    </select>
+
+
+</mapper>

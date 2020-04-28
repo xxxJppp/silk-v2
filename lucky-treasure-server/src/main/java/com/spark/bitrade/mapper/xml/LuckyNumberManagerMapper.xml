@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.LuckyNumberManagerMapper">
+
+    <select id="listBulls" resultType="com.spark.bitrade.controller.vo.LuckyRunBullListVo">
+        SELECT
+        lnm.`name`,
+        lnm.lucky_time,
+        lnm.join_member_count,
+        lnm.join_ticket_count,
+        lnm.start_time,
+        lnm.end_time,
+        lnm.amount,
+        lnm.win_num,
+        lnm.win_member_count,
+        lnm.join_member_amount,
+        GROUP_CONCAT(lmc.coin_unit) as coins,
+        lnm.id as actId,
+        lnm.unit as coinUnit
+        FROM
+        lucky_number_manager lnm
+        LEFT JOIN lucky_manage_coin lmc ON lmc.num_id=lnm.id
+        <where>
+            <if test="param.status.getValue()==0">
+                <!--未开始 判断选牛开始时间在当前时间之后-->
+                AND start_time  <![CDATA[>]]> now()
+            </if>
+            <if test="param.status.getValue()==1">
+                <!--选牛中-->
+                AND start_time  <![CDATA[<]]> now()
+                AND end_time  <![CDATA[>]]> now()
+            </if>
+            <if test="param.status.getValue()==2">
+                <!--赛牛中-->
+                AND end_time  <![CDATA[<=]]> now()
+                AND lucky_time  <![CDATA[>]]> now()
+            </if>
+            <if test="param.status.getValue()==3">
+                <!--已结束-->
+                AND lucky_time  <![CDATA[<]]> now()
+            </if>
+            <!--开奖时间判断-->
+            <if test="param.startTime!=null and param.startTime!=''">
+                AND lucky_time <![CDATA[>=]]> #{param.startTime}
+            </if>
+            <if test="param.endTime!=null and param.endTime!=''">
+                AND lucky_time <![CDATA[<=]]> #{param.endTime}
+            </if>
+            <if test="param.coinUnit!=null and param.coinUnit!=''">
+                AND unit = #{param.coinUnit}
+            </if>
+            <if test="memberActIds.size>0">
+                AND lnm.id IN
+                <foreach collection="memberActIds" item="item" index="index" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            AND act_type = 1
+            AND delete_state =0
+            AND hidden=0
+        </where>
+        GROUP BY lnm.id
+        ORDER BY lnm.create_time desc
+
+
+    </select>
+
+
+
+    <select id="detailBull" resultType="com.spark.bitrade.controller.vo.LuckyRunBullListVo">
+        SELECT
+        lnm.`name`,
+        lnm.lucky_time,
+        lnm.join_member_count,
+        lnm.join_ticket_count,
+        lnm.start_time,
+        lnm.end_time,
+        lnm.amount,
+        lnm.win_num,
+        lnm.win_member_count,
+        lnm.join_member_amount,
+        GROUP_CONCAT(lmc.coin_unit) as coins,
+        lnm.id as actId,
+        lnm.unit as coinUnit
+        FROM
+        lucky_number_manager lnm
+        LEFT JOIN lucky_manage_coin lmc ON lmc.num_id=lnm.id
+        where
+            lnm.id=#{actId}
+            AND act_type = 1
+            AND delete_state =0
+            AND hidden=0
+
+        GROUP BY lnm.id
+
+
+    </select>
+</mapper>

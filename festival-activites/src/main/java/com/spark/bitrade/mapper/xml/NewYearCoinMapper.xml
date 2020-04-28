@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.NewYearCoinMapper">
+
+    <insert id="addTransaction">
+        INSERT INTO member_transaction(address,amount,create_time,member_id,symbol,`type`,fee,flag,ref_id,`comment`,fee_discount,fee_discount_amount,fee_discount_coin_unit)
+        VALUES(#{entity.address},#{entity.amount},#{entity.createTime},#{entity.memberId},#{entity.symbol},#{entity.type},#{entity.fee},#{entity.flag},#{entity.refId},#{entity.comment},#{entity.feeDiscount},#{entity.feeDiscountAmount},#{entity.feeDiscountCoinUnit});
+    </insert>
+    <update id="trade">
+        update member_wallet
+        set
+        balance=balance + #{tradeBalance},
+        frozen_balance = frozen_balance + #{tradeFrozenBalance},
+        lock_balance = lock_balance + #{tradeLockBalance}
+        where
+        id = #{walletId}
+        and balance + #{tradeBalance} >= 0
+        and frozen_balance + #{tradeFrozenBalance} >= 0
+        and lock_balance + #{tradeLockBalance} >=0
+
+    </update>
+
+</mapper>

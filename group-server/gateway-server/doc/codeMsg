@@ -1,0 +1,567 @@
+
+
+##CommonMsgCode
+    /**
+     * 成功
+     */
+    SUCCESS(0, "SUCCESS"),
+    /**
+     * 失败
+     */
+    FAILURE(1, "FAILURE"),
+    /**
+     * 未知错误
+     */
+    ERROR(500, "UNKNOWN_ERROR"),
+    /**
+     * 未知错误
+     */
+    UNKNOWN_ERROR(500, "UNKNOWN_ERROR"),
+
+    /**
+     * 服务不可用。如：服务不可用或请求超时等
+     */
+    SERVICE_UNAVAILABLE(503, "SERVICE_UNAVAILABLE"),
+    /**
+     * 服务响应超时
+     */
+    SERVICE_RESPONSE_TIMEOUT(504, "SERVICE_RESPONSE_TIMEOUT"),
+
+
+    // 权限类错误 = 3
+    /**
+     * 未知账户
+     */
+    UNKNOWN_ACCOUNT(3000, "UNKNOWN_ACCOUNT"),
+    /**
+     * 操作未授权
+     */
+    UNAUTHORIZED(30001, "UNAUTHORIZED"),
+
+    // 请求类错误 = 4（参数、请求类型等）
+    /**
+     * 无效的请求
+     */
+    BAD_REQUEST(4000, "BAD_REQUEST"),
+    /**
+     * 参数无效
+     */
+    INVALID_PARAMETER(4001, "INVALID_PARAMETER"),
+    /**
+     * 参数不能为空
+     */
+    REQUIRED_PARAMETER(4002, "REQUIRED_PARAMETER"),
+    /**
+     * 无效的请求方式
+     */
+    INVALID_REQUEST_METHOD(4003, "INVALID_REQUEST_METHOD"),
+
+    /**
+     * 获取请求失败
+     */
+    GET_REQUEST_FAILED(4004, "GET_REQUEST_FAILED"),
+
+    /**
+     * apiKey为null
+     */
+    API_KEY_IS_NULL(4005, "API_KEY_IS_NULL"),
+
+    /**
+     * appId为null
+     */
+    APP_ID_IS_NULL(4006, "APP_ID_IS_NULL"),
+    /**
+     * apiTime为null
+     */
+    API_TIME_IS_NULL(4007, "API_TIME_IS_NULL"),
+
+    /**
+     * apiSign为null
+     */
+    API_SIGN_IS_NULL(4008, "API_SIGN_IS_NULL"),
+
+    /**
+     * 禁止重复提交
+     */
+    FORBID_RESUBMIT(4010, "FORBID_RESUBMIT"),
+
+
+    //用户模块=5
+    /**
+     * 无资金密码
+     */
+    MISSING_JYPASSWORD(5100, "MISSING_JYPASSWORD"),
+    /**
+     * 请先设置资金密码
+     */
+    NO_SET_JYPASSWORD(5101, "NO_SET_JYPASSWORD"),
+    /**
+     * 资金密码错误
+     */
+    ERROR_JYPASSWORD(5102, "ERROR_JYPASSWORD"),
+
+    //帐户模块=6
+    /**
+     * 钱包账户交易失败
+     */
+    ACCOUNT_BALANCE_TRADE_FAILED(6013, "ACCOUNT_BALANCE_TRADE_FAILED"),
+
+    //场外交易模块=7
+
+    //币币交易模块=8
+
+    //活动模块=2
+
+
+    // 其它错误 = 9
+    /**
+     * 未预见错误
+     */
+    UNCHECKED_ERROR(9000, "UNCHECKED_ERROR");
+
+##UcMsgCode
+    /**
+     * 二维码获取失败（OSS二维码解析失败）
+     */
+    ERROR_PARSE_OSS_QRCODE_URL(6100, "ERROR_PARSE_OSS_QRCODE_URL"),
+
+    /**
+     * 激活失败,因为用户名已存在
+     */
+    ACTIVATION_FAILS_USERNAME(51000, "ACTIVATION_FAILS_USERNAME"),
+
+    /**
+     * 请输入手机号或邮箱
+     */
+    MISSING_USERNAME(51001, "MISSING_USERNAME"),
+
+    /**
+     * 请输入密码
+     */
+    MISSING_PASSWORD(51002, "MISSING_PASSWORD"),
+
+    /**
+     * 账号或密码错误
+     */
+    LOGIN_FALSE(51003, "LOGIN_FALSE"),
+
+    /**
+     * 该帐号已经被禁用，请联系客服
+     */
+    ACCOUNT_DISABLE(51004, "ACCOUNT_DISABLE"),
+
+    /**
+     * 手机号为空或格式错误
+     */
+    PHONE_EMPTY_OR_INCORRECT(51005, "PHONE_EMPTY_OR_INCORRECT"),
+
+    /**
+     * 请先获取验证码
+     */
+    VERIFICATION_CODE_NOT_EXISTS(51006, "VERIFICATION_CODE_NOT_EXISTS"),
+
+    /**
+     * 该用户名已存在
+     */
+    USERNAME_ALREADY_EXISTS(51007, "USERNAME_ALREADY_EXISTS"),
+
+    /**
+     * 验证码错误
+     */
+    VERIFICATION_CODE_INCORRECT(51008, "VERIFICATION_CODE_INCORRECT"),
+
+    /**
+     * 推荐码错误，推荐人不存在
+     */
+    PROMOTION_CODE_ERRO(51009, "PROMOTION_CODE_ERRO"),
+
+    /**
+     * 验证失败
+     */
+    GEETEST_FAIL(51010, "GEETEST_FAIL"),
+
+    /**
+     * 该邮箱已经被绑定
+     */
+    EMAIL_ALREADY_BOUND(51011, "EMAIL_ALREADY_BOUND"),
+
+    /**
+     * 邮箱格式错误
+     */
+    WRONG_EMAIL(51012, "WRONG_EMAIL"),
+
+    /**
+     * Silktrader交易平台——验证码
+     */
+    REGISTRATION_EMAIL_TITLE(51013, "REGISTRATION_EMAIL_TITLE"),
+
+    /**
+     * 发送成功，验证码十分钟后过期
+     */
+    SENT_SUCCESS_TEN(51014, "SENT_SUCCESS_TEN"),
+
+    /**
+     * 注册激活邮件已经发送至您邮箱，请勿重复请求
+     */
+    LOGIN_EMAIL_ALREADY_SEND(51015, "LOGIN_EMAIL_ALREADY_SEND"),
+
+    /**
+     * 注册激活邮件已发送至您邮箱,请在12小时内完成注册
+     */
+    SEND_LOGIN_EMAIL_SUCCESS(51016, "SEND_LOGIN_EMAIL_SUCCESS"),
+
+    /**
+     * 注册成功
+     */
+    REGISTRATION_SUCCESS(51017, "REGISTRATION_SUCCESS"),
+
+    /**
+     * 注册失败
+     */
+    REGISTRATION_FAILED(51018, "REGISTRATION_FAILED"),
+
+    /**
+     * 该手机已经注册
+     */
+    PHONE_ALREADY_EXISTS(51019, "PHONE_ALREADY_EXISTS"),
+
+    /**
+     * 非法请求
+     */
+    REQUEST_ILLEGAL(51020, "REQUEST_ILLEGAL"),
+
+    /**
+     * 请求过于频繁，请稍候重试
+     */
+    FREQUENTLY_REQUEST(51021, "FREQUENTLY_REQUEST"),
+
+    /**
+     * 操作成功
+     */
+    SEND_SMS_SUCCESS(51022, "SEND_SMS_SUCCESS"),
+
+    /**
+     * 无此用户
+     */
+    MEMBER_NOT_EXISTS(51023, "MEMBER_NOT_EXISTS"),
+
+    /**
+     * 绑定推荐关系失败
+     */
+    BIND_PROMOTION_FAIL(51024, "BIND_PROMOTION_FAIL"),
+
+    /**
+     * 绑定推荐关系成功
+     */
+    BIND_PROMOTION_SUCCESS(51025, "BIND_PROMOTION_SUCCESS");
+
+##AcctMsgCode
+
+    //帐户模块=6
+    /**
+     * 账户不存在
+     */
+    MISSING_ACCOUNT(6000, "MISSING_ACCOUNT"),
+    /**
+     * 账户无效
+     */
+    INVALID_ACCOUNT(6001, "INVALID_ACCOUNT"),
+    /**
+     * 禁止提币
+     */
+    FORBID_COIN_OUT(6002, "FORBID_COIN_OUT"),
+    /**
+     * 禁止充币
+     */
+    FORBID_COIN_IN(6003, "FORBID_COIN_IN"),
+    /**
+     * 账户签名校验失败
+     */
+    BAD_ACCOUNT_SIGNATURE(6004, "BAD_ACCOUNT_SIGNATURE"),
+    /**
+     * 可用余额不足
+     */
+    ACCOUNT_BALANCE_INSUFFICIENT(6010, "ACCOUNT_BALANCE_INSUFFICIENT"),
+
+    /**
+     * 冻结余额不足
+     */
+    ACCOUNT_FROZEN_BALANCE_INSUFFICIENT(6011,"ACCOUNT_FROZEN_BALANCE_INSUFFICIENT"),
+    /**
+     * 锁仓余额不足
+     */
+    ACCOUNT_LOCK_BALANCE_INSUFFICIENT(6012,"ACCOUNT_LOCK_BALANCE_INSUFFICIENT"),
+
+    /**
+     * 钱包账户交易失败
+     */
+    ACCOUNT_BALANCE_TRADE_FAILED(6013, "ACCOUNT_BALANCE_TRADE_FAILED"),
+    ;
+
+##ExchangeMsgCode
+    /**
+     * 未支持的闪兑币种
+     */
+    NONSUPPORT_FAST_EXCHANGE_COIN(8050, "NONSUPPORT_FAST_EXCHANGE_COIN"),
+    /**
+     * 无闪兑总账户
+     */
+    MISSING_FAST_EXCHANGE_ACCOUNT(8051, "MISSING_FAST_EXCHANGE_ACCOUNT"),
+
+    /**
+     * 无效的兑换汇率
+     */
+    INVALID_EXCHANGE_RATE(8100, "INVALID_EXCHANGE_RATE"),
+    /**
+     * 无效的兑换数量
+     */
+    INVALID_EXCHANGE_AMOUNT(8102, "INVALID_EXCHANGE_AMOUNT"),
+
+    /**
+     * 闪兑订单保存失败
+     */
+    SAVE_EXCHANGE_ORDER_FAILED(8103, "SAVE_EXCHANGE_ORDER_FAILED"),
+
+    /**
+     * 订单不存在
+     */
+    NONEXISTENT_ORDER(8104, "NONEXISTENT_ORDER"),
+
+    /**
+     * 状态不匹配
+     */
+    UNMATCHED_STATUS(8105, "UNMATCHED_STATUS"),
+
+    /**
+     * 更新闪兑订单状态失败
+     */
+    UPDATE_EXCHANGE_ORDER_STATUS_FAILED(8106, "UPDATE_EXCHANGE_ORDER_STATUS_FAILED"),
+
+    ;
+
+##LockMsgCode
+     /**
+      * 活动已失效，欢迎关注我们的其他活动
+      */
+     NOT_HAVE_SET(2001,"NOT_HAVE_SET"),
+     /**
+      * 无效的活动
+      */
+     INVALID_ACTIVITY(2002,"INVALID_ACTIVITY"),
+     /**
+      * 该活动不存在
+      */
+     NOT_HAVE_ACTIVITY(2003,"NOT_HAVE_ACTIVITY"),
+     /**
+      * 锁仓保存失败
+      */
+     LOCK_SAVE_ERROR(2004,"LOCK_SAVE_ERROR"),
+
+     /**
+      *  低于最低的购买数量限制
+      */
+     LIMIT_MIN_BUY_AMOUNT(2005,"LIMIT_MIN_BUY_AMOUNT"),
+     /**
+      * 高于最大的购买数量限制
+      */
+     LIMIT_MAX_BUY_AMOUNT(2006,"LIMIT_MAX_BUY_AMOUNT"),
+     /**
+      * 已超出活动计划的购买数量
+      */
+     LIMIT_OVER_PLAN_AMOUNT(2007,"LIMIT_OVER_PLAN_AMOUNT"),
+
+     /**
+      * 已超出总活动计划的购买数量
+      */
+     LIMIT_OVER_PROJECT_PLAN_AMOUNT(2008,"LIMIT_OVER_PROJECT_PLAN_AMOUNT"),
+
+     /**
+      * 已超出活动次数限制
+      */
+     LIMIT_OVER_COUNT_VALID_CAMPAIGN(2009,"LIMIT_COUNT_VALID_CAMPAIGN"),
+
+     /**
+      * 已超出当日参与活动的次数限制
+      */
+     LIMIT_OVER_COUNT_IN_DAY(2010,"LIMIT_OVER_COUNT_IN_DAY"),
+
+    /**
+     * 无效的升仓套餐
+     */
+    INVALID_UPGRADE_PACKAGE(2011, "INVALID_UPGRADE_PACKAGE"),
+
+    /**
+     * 升仓保存失败
+     */
+    UPGRADE_PACKAGE_SAVE_ERROR(2012, "UPGRADE_PACKAGE_SAVE_ERROR"),
+
+    /**
+     * 未参与过锁仓活动
+     */
+    NOT_SLP_RECORD(2013, "NOT_SLP_RECORD"),
+
+    /**
+     * 有多个正在进行的活动，无法升仓
+     */
+    MULTIPLE_SLP_RECORD(2014, "MULTIPLE_SLP_RECORD"),
+     ;
+
+##LSMsgCode
+    /**
+     * 无效的数量
+     */
+    INVALID_AMOUNT(2100, "INVALID_AMOUNT"),
+
+    /**
+     * 无效的ioco
+     */
+    NULL_IOCO(2151, "NULL_IOCO"),
+    /**
+     * 未找到推荐记录
+     */
+    NOT_FIND_SLP_PROMOTION(2152, "NOT_FIND_SLP_PROMOTION"),
+    /**
+     * ioco异常，请联系客服
+     */
+    IOCO_EXCEPTION(2153, "IOCO_EXCEPTION"),
+    /**
+     * ioco用户活动剩余额度不足
+     */
+    IOCO_USER_BALANCE_NOT_ENOUGH(2154, "IOCO_USER_BALANCE_NOT_ENOUGH"),
+    /**
+     * ioco请求参数不对，请勿使用非法参数
+     */
+    IOCO_PARAMETER_VERIFIED(2155, "IOCO_PARAMETER_VERIFIED"),
+    /**
+     * ioco用户推荐人数不足
+     */
+    IOCO_RECOMMEND_NOT_ENOUGH(2156, "IOCO_RECOMMEND_NOT_ENOUGH"),
+    /**
+     * ioco用户不存在
+     */
+    IOCO_USER_NOT_EXIST(2157, "IOCO_USER_NOT_EXIST"),
+    /**
+     * ioco数量太低
+     */
+    IOCO_AMOUNT_SAMLL(2158, "IOCO_AMOUNT_SAMLL"),
+    /**
+     * ioco当前活动余额不足
+     */
+    IOCO_CURRENT_ACTIVITY_BALANCE_NOT_ENOUGH(2159, "IOCO_CURRENT_ACTIVITY_BALANCE_NOT_ENOUGH"),
+    /**
+     * ioco当前活动已失效
+     */
+    IOCO_CURRENT_ACTIVITY_ALREADY_INVALID(2160, "IOCO_CURRENT_ACTIVITY_ALREADY_INVALID")
+
+    /**
+     * ioco购买数量太低
+     */
+    IOCO_BUY_AMOUNT_TO_SMALL(2161, "IOCO_BUY_AMOUNT_TO_SMALL")
+
+    /**
+     * 记录保存失败
+     */
+    RECORD_TO_SAVE(2162,"记录保存失败")
+
+    ;
+    ;
+
+
+
+
+##PSMsgCode
+
+    /**
+     * 无效的币种
+     */
+    INVALID_UNIT(6600, "INVALID_UNIT"),
+    /**
+     * 金额超过最大限制
+     */
+    MAX_AMOUNT_LIMIT(6601, "MAX_AMOUNT_LIMIT"),
+    /**
+     * 金额低于最小限制
+     */
+    MIN_AMOUNT_LIMIT(6602, "MIN_AMOUNT_LIMIT"),
+    /**
+     * 获取币种汇率失败
+     */
+    GET_RATE_FAILED(6603, "GET_RATE_FAILED"),
+    /**
+     * 创建订单失败
+     */
+    BUILD_ORDER_FAILED(6604, "BUILD_ORDER_FAILED"),
+    /**
+     * 未找到合适的付款账号
+     */
+    MATCH_ACCOUNT_FAILED(6605, "MATCH_ACCOUNT_FAILED"),
+    /**
+     * 保存匹配记录失败
+     */
+    MATCH_RECORD_SAVE_FAILED(6606, "MATCH_RECORD_SAVE_FAILED"),
+    /**
+     * 获取账号设备串号失败
+     */
+    GET_DEVICE_SERIAL_NO_FAILED(6607, "GET_DEVICE_SERIAL_NO_FAILED"),
+    /**
+     * 远程调用失败
+     */
+    REMOTE_SERVICE_FAILED(6608, "REMOTE_SERVICE_FAILED"),
+    /**
+     * 用户余额不足
+     */
+    BALANCE_NOT_ENOUGH(6609, "BALANCE_NOT_ENOUGH"),
+    /**
+     * 未找到对应记录
+     */
+    RECORD_NOT_FOUND(6610, "RECORD_NOT_FOUND"),
+
+    /**
+     * 不是内测用户
+     */
+    NOT_INNER_MEMBER(6611, "NOT_INNER_MEMBER"),
+
+    /**
+     * 不是实名用户
+     */
+    NOT_REAL_NAME_MEMBER(6612, "NOT_REAL_NAME_MEMBER"),
+
+    /**
+     *没有绑定手机号
+     */
+    NOT_BIND_PHONE(6613, "NOT_BIND_PHONE"),
+
+    /**
+     * 支付宝付款功能关闭
+     */
+    PAY_CLOSE_AL_PAY(6614, "PAY_CLOSE_AL_PAY"),
+    /**
+     * 微信支付功能关闭
+     */
+    PAY_CLOSE_WX_PAY(6615, "PAY_CLOSE_WX_PAY"),
+    /**
+     * 达到交易上限
+     */
+    TRADE_UPPER_LIMIT(6616, "TRADE_UPPER_LIMIT"),
+    /**
+     * 关闭SilkPay支付功能
+     */
+    PAY_CLOSE_SILK_PAY(6617, "PAY_CLOSE_SILK_PAY"),
+    ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

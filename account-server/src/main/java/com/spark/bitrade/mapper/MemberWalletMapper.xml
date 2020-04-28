@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.MemberWalletMapper">
+
+
+    <!--加减钱包余额-->
+    <update id="trade">
+        update member_wallet
+        set
+            balance=balance + #{tradeBalance},
+            frozen_balance = frozen_balance + #{tradeFrozenBalance},
+            lock_balance = lock_balance + #{tradeLockBalance}
+        where
+            id = #{walletId}
+            and balance + #{tradeBalance} >= 0
+            and frozen_balance + #{tradeFrozenBalance} >= 0
+            and lock_balance + #{tradeLockBalance} >=0
+    </update>
+
+    <select id="findMemberWalletDetail" resultType="com.spark.bitrade.vo.MembertVo">
+      select
+        mw.member_id as membertId,
+        mw.balance as memberHoldCoinNum,
+        m.username as memberName,
+        (SELECT sum(balance) from member_wallet w where w.coin_id =#{coinId}
+            <if test="balanceStart != null and balanceStart != ''">
+                and w.balance &gt;= #{balanceStart}
+            </if>
+            <if test="balanceEnd != null and balanceEnd != ''">
+                and w.balance &lt;= #{balanceEnd}
+            </if>
+        ) as holdCoinNum
+          from member_wallet mw LEFT JOIN member m on mw.member_id = m.id
+          where coin_id = #{coinId}
+          <if test="balanceStart != null and balanceStart != ''">
+            and mw.balance &gt;= #{balanceStart}
+          </if>
+          <if test="balanceEnd != null and balanceEnd != ''">
+            and mw.balance &lt;= #{balanceEnd}
+          </if>
+    </select>
+</mapper>

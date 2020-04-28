@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.MemberTransactionMapper">
+
+
+    <select id="widthRechargeStaticsVo" resultType="com.spark.bitrade.vo.WidthRechargeStaticsVo">
+
+        SELECT
+        m.id memberId,
+        m.username userName,
+        mt.create_time,
+        mt.amount
+        FROM
+        member_transaction mt
+        LEFT JOIN member m ON m.id = mt.member_id
+        WHERE
+        mt.type=#{type}
+        AND mt.symbol = #{coin}
+        <if test="startTime!=null">
+          AND mt.create_time <![CDATA[>=]]> #{startTime}
+        </if>
+        <if test="endTime!=null">
+            AND mt.create_time <![CDATA[<=]]> #{endTime}
+        </if>
+        order by mt.create_time desc
+    </select>
+</mapper>

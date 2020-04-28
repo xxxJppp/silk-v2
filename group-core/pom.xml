@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <artifactId>bitrade-parent-v2</artifactId>
+        <groupId>com.spark.bitrade</groupId>
+        <version>2.0.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>group-core</artifactId>
+    <packaging>pom</packaging>
+
+    <name>group-core</name>
+
+    <description>通用依赖分组</description>
+
+    <properties>
+        <group_core.version>2.0.0</group_core.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <modules>
+        <module>enum-core</module>
+        <module>entitys</module>
+        <module>chat-entities</module>
+        <module>uc-entities</module>
+        <module>account-entities</module>
+        <module>exchange-entities</module>
+        <module>lock-entity</module>
+        <module>lock-slp-entities</module>
+        <module>payment-entities</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.spark.bitrade</groupId>
+                <artifactId>entitys</artifactId>
+                <version>${group_core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.spark.bitrade</groupId>
+                <artifactId>enum-core</artifactId>
+                <version>${group_core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.spark.bitrade</groupId>
+                <artifactId>chat-entities</artifactId>
+                <version>${group_core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.spark.bitrade</groupId>
+                <artifactId>uc-entities</artifactId>
+                <version>${group_core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.spark.bitrade</groupId>
+                <artifactId>payment-entities</artifactId>
+                <version>${group_core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.spark.bitrade</groupId>
+                <artifactId>account-entities</artifactId>
+                <version>${group_core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.spark.bitrade</groupId>
+                <artifactId>exchange-entities</artifactId>
+                <version>${group_core.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <!--编译时跳过测试-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

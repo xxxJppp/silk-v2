@@ -1,0 +1,1 @@
+Your verification code is ${code}, Please fill in according the instructions. Do not reveal it to others.

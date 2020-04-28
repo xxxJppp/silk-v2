@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.ExchangeReleaseAwardTotalMapper">
+    <update id="addTotalBuyAmount">
+        update exchange_release_award_total
+        set total_buy_amount = total_buy_amount + #{buyAmount} ,update_time = now()
+        where member_id = #{memberId}
+    </update>
+
+    <update id="updateAward">
+        update exchange_release_award_total
+        set total_buy_amount = total_buy_amount + #{buyAmount} ,total_award_times = total_award_times+1,
+            total_award_amount = total_award_amount + #{awardAmount}, update_time = now()
+        where member_id = #{memberId} and total_award_times = #{awardTimes} and total_buy_amount <![CDATA[ >= ]]> #{minTotalBuyAmount}
+    </update>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.repository.mapper.BtBankMinerBalanceTransactionMapper">
+    <resultMap id="BaseResultMap" type="com.spark.bitrade.repository.entity.BtBankMinerBalanceTransaction">
+        <!--@mbg.generated-->
+        <!--@Table bt_bank_miner_balance_transaction-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="member_id" jdbcType="BIGINT" property="memberId"/>
+        <result column="type" jdbcType="TINYINT" property="type"/>
+        <result column="money" jdbcType="DECIMAL" property="money"/>
+        <result column="balance" jdbcType="DECIMAL" property="balance"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="order_transaction_id" jdbcType="BIGINT" property="orderTransactionId"/>
+        <result column="ref_id" jdbcType="BIGINT" property="refId"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, member_id, `type`, money, balance, create_time, order_transaction_id, ref_id,
+        remark
+    </sql>
+    <select id="getYestodayMinerBalanceTransactionsSumByMemberId" resultType="java.math.BigDecimal">
+
+        select
+        SUM(money) from
+        bt_bank_miner_balance_transaction where member_id=#{memberId}
+
+
+        <if test="types!=null and types.size>0">
+            and `type` in
+            <foreach collection="types" item="item" index="index" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+
+        and DATE_SUB(curdate(),INTERVAL 1 DAY)=DATE(create_time)
+
+    </select>
+</mapper>

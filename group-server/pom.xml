@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>bitrade-parent-v2</artifactId>
+        <groupId>com.spark.bitrade</groupId>
+        <version>2.0.0</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>group-server</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>eureka-server</module>
+        <module>gateway-server</module>
+        <!--废弃该模块，该模块的功能已经包含在gateway-server中-->
+        <!--<module>gateway-unsafe-server</module>-->
+        <module>kms-server</module>
+        <module>common-web-server</module>
+        <module>advanced-web-server</module>
+    </modules>
+
+    <properties>
+        <group_server.version>2.0.0</group_server.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+<!--            <dependency>-->
+<!--                <groupId>com.spark.bitrade</groupId>-->
+<!--                <artifactId>eureka-server</artifactId>-->
+<!--                <version>${group_server.version}</version>-->
+<!--            </dependency>-->
+
+            <dependency>
+                <groupId>com.spark.bitrade</groupId>
+                <artifactId>gateway-server</artifactId>
+                <version>${group_server.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.spark.bitrade</groupId>
+                <artifactId>kms-server</artifactId>
+                <version>${group_server.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.spark.bitrade</groupId>
+                <artifactId>common-web-server</artifactId>
+                <version>${group_server.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.spark.bitrade</groupId>
+                <artifactId>advanced-web-server</artifactId>
+                <version>${group_server.version}</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+</project>

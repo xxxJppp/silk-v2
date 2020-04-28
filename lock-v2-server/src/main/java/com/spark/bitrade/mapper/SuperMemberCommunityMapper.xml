@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.SuperMemberCommunityMapper">
+
+    <select id="findCommunityMembers" resultType="com.spark.bitrade.vo.CommunityMemberVo">
+        SELECT
+            smc.member_id,
+            m.username,
+            smc.create_time,
+            smc.status
+        FROM
+            super_member_community smc
+        LEFT JOIN member m ON smc.member_id = m.id
+        WHERE
+            smc.community_id =#{communityId}
+            AND smc.status=0
+        ORDER BY smc.create_time
+    </select>
+</mapper>

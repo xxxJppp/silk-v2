@@ -1,0 +1,13 @@
+
+2019-09-05
+  * 撮合信息 ExchangeTrade
+    +  卖单用户ID buyMemberId
+       卖单用户ID sellMemberId
+       基币USD汇率 baseUsdRate
+  * 交易明细 ExchangeTradeDetail/ExchangeOrderDetail
+    +  交易对 symbol
+       基币USD汇率 baseUsdRate
+
+  + 交易结算 TradeSettleDelta
+  + 订单结算 OrderSettleDelta
+

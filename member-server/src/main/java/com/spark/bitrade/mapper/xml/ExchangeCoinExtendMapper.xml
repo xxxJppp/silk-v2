@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.ExchangeCoinExtendMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.bitrade.entity.ExchangeCoinExtend">
+        <id column="id" property="id" />
+        <result column="symbol" property="symbol" />
+        <result column="buy_fee_discount" property="buyFeeDiscount" />
+        <result column="sell_fee_discount" property="sellFeeDiscount" />
+        <result column="entrust_buy_discount" property="entrustBuyDiscount" />
+        <result column="entrust_sell_discount" property="entrustSellDiscount" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, symbol, buy_fee_discount, sell_fee_discount, entrust_buy_discount, entrust_sell_discount, create_time, update_time
+    </sql>
+
+</mapper>

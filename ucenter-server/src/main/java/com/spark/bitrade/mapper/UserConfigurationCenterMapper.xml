@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.spark.bitrade.mapper.UserConfigurationCenterMapper">
+
+    <!--    新增-->
+    <insert id="addUserConfigurationCenter">
+        insert into user_configuration_center(member_id,triggering_event,is_sms,is_email,is_apns)
+            values(#{memberId},#{triggeringEvent},#{isSms},#{isEmail},#{isApns})
+    </insert>
+
+    <!--    修改-->
+    <update id="updateUserConfigurationCenter">
+        update user_configuration_center
+        <if test='channel=="isSms"'>
+            set is_sms=#{status }
+        </if>
+        <if test='channel=="isEmail"'>
+            set is_email=#{status }
+        </if>
+        <if test='channel=="isApns"'>
+            set is_apns=#{status }
+        </if>
+        where member_id=#{memberId } and triggering_event=#{triggeringEvent }
+    </update>
+</mapper>

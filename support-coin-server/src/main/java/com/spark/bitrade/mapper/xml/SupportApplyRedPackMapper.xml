@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.SupportApplyRedPackMapper">
+
+    <select id="applyRedPackList" resultType="com.spark.bitrade.vo.ApplyRedPackListVo">
+
+        SELECT
+        s.id,
+        s.red_pack_name,
+        s.red_pack_manage_id,
+        s.start_time,
+        s.end_time,
+        s.red_coin,
+        s.red_total_amount,
+        s.red_total_count,
+        s.receive_type,
+        s.is_old_user,
+        s.audit_status,
+        s.audit_opinion,
+        s.remark,
+        s.apply_time,
+        s.audit_time,
+        r.url,
+        s.max_amount,
+        s.min_amount
+        FROM
+        support_apply_red_pack s
+        LEFT JOIN red_pack_manage r ON r.id = s.red_pack_manage_id
+        <where>
+            AND s.project_coin = #{coin}
+            <if test="param.auditStatus!=null">
+                AND s.audit_status = #{param.auditStatus}
+            </if>
+            <if test="param.redPackName!=null and param.redPackName!=''">
+                AND s.red_pack_name LIKE CONCAT('%',#{param.redPackName},'%')
+            </if>
+            <if test="param.startTimeFrom!=null and param.startTimeFrom!=''">
+                AND s.start_time <![CDATA[>]]> #{param.startTimeFrom}
+            </if>
+
+            <if test="param.startTimeEnd!=null and param.startTimeEnd!=''">
+                AND s.start_time  <![CDATA[<]]> #{param.startTimeEnd}
+            </if>
+
+            <if test="param.endTimeFrom!=null and param.endTimeFrom!=''">
+                AND s.end_time   <![CDATA[>]]> #{param.endTimeFrom}
+            </if>
+
+            <if test="param.endTimeEnd!=null and param.endTimeEnd!=''">
+                AND s.end_time   <![CDATA[<]]> #{param.endTimeEnd}
+            </if>
+
+            <if test="param.redStatus!=null and param.redStatus==0">
+                AND s.start_time <![CDATA[>]]> now() AND s.audit_status =1
+            </if>
+            <if test="param.redStatus!=null and param.redStatus==1">
+                AND s.start_time <![CDATA[<]]> now() AND s.end_time <![CDATA[>]]> now()  AND s.audit_status =1
+            </if>
+            <if test="param.redStatus!=null and param.redStatus==2">
+                AND s.end_time <![CDATA[<]]> now()  AND s.audit_status =1
+            </if>
+
+        </where>
+        order by s.apply_time desc
+
+
+    </select>
+    <select id="applyRedPackStatics" resultType="com.spark.bitrade.vo.RedPackRecieveDetailVo">
+
+        SELECT
+        *
+        FROM
+        red_pack_receive_record r
+        WHERE
+        r.redpack_id = #{applyRedPackId}
+        <if test="param.receiveStatus!=null">
+            AND r.receive_status= #{param.receiveStatus}
+        </if>
+        <if test="param.receiveStartTime!=null and param.receiveStartTime!=''">
+            AND r.receive_time   <![CDATA[>]]> #{param.receiveStartTime}
+        </if>
+        <if test="param.receiveEndTime!=null and param.receiveEndTime!=''">
+            AND r.receive_time   <![CDATA[<]]> #{param.receiveEndTime}
+        </if>
+        order by r.create_time desc
+    </select>
+
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.WalletChangeRecordMapper">
+
+
+    <update id="updateStatus">
+        update wallet_change_record
+            set status = #{newStatus}
+        where
+            id  =#{id}
+            and member_id = #{memberId}
+            and status = #{oldStatus}
+    </update>
+    <update id="updateTccStatus">
+        update wallet_change_record
+            set tcc_status = #{newStatus}
+        where
+            id = #{id}
+            and member_id = #{memberId}
+            and tcc_status = #{oldStatus}
+    </update>
+</mapper>

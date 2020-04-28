@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.OtcCoinMapper">
+
+    <select id="getAllNormalCoinAndBalance" resultType="java.util.Map">
+        SELECT
+            a.id,
+            a.jy_rate jyRate,
+            a.buy_jy_rate buyJyRate,
+            a.trade_min_limit AS tradeMinLimit,
+            a.trade_max_limit AS tradeMaxLimit,
+            a.coin_scale coinScale,
+            a.general_fee_coin_unit generalFeeCoinUnit,
+            a.general_fee generalFee,
+            a.general_discount_coin_unit generalDiscountCoinUnit,
+            a.general_discount_rate generalDiscountRate,
+            a.general_discount_coin_scale generalDiscountCoinScale,
+            a.general_buy_min_balance generalBuyMinBalance,
+            a.`name`,
+            a.name_cn AS nameCn,
+            a.unit,
+            a.sell_min_amount,
+            a.sort,
+            a.buy_min_amount,
+            a.currency_id currencyId,
+            IFNULL(mw.balance,0) balance
+        FROM
+            otc_coin a
+        LEFT JOIN member_wallet mw ON a.`name` = mw.coin_id AND mw.member_id = #{memberId}
+        WHERE
+            a.`status` = 0
+    </select>
+</mapper>

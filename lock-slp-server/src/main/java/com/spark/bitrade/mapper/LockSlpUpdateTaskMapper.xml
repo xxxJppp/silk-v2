@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.LockSlpUpdateTaskMapper">
+    <!--    获取锁仓记录，返回数据-->
+    <resultMap id="baseMap" type="com.spark.bitrade.vo.LockRecordsVo">
+        <result column="ref_invitees_id" property="refInviteesId"/>
+        <result column="type" property="type"/>
+        <result column="lock_amount" property="lockAmount"/>
+        <result column="status" property="status"/>
+        <result column="plan_name" property="planName"/>
+        <result column="ref_prev_plan_name" property="refPrevPlanName"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <!--    获取锁仓记录，查询sql-->
+    <select id="listLockRecords" resultMap="baseMap">
+        SELECT
+        lsut.ref_invitees_id AS ref_invitees_id,
+        CASE
+        WHEN lsut.ref_invitees_id = lsut.ref_lock_member_id THEN
+        1
+        ELSE
+        2
+        END type,
+        CASE
+        WHEN slrp.lock_amount IS NULL THEN
+        0
+        ELSE
+        slrp.lock_amount
+        END AS lock_amount,
+        CASE
+        WHEN slrp.plan_name IS NULL THEN
+        ''
+        ELSE
+        slrp.plan_name
+        END AS plan_name,
+        CASE
+        WHEN slrp.create_time IS NULL THEN
+        NOW()
+        ELSE
+        slrp.create_time
+        END AS create_time,
+        slrp.status AS status,
+        slrp.ref_prev_plan_name AS ref_prev_plan_name
+        FROM
+        lock_slp_update_task lsut
+        LEFT JOIN lock_slp_release_plan slrp ON lsut.ref_plan_id = slrp.id
+        WHERE
+        lsut.member_id &lt;&gt; lsut.ref_lock_member_id
+        AND lsut.member_id = #{memberId }
+        <if test="startTime != null and startTime != ''">
+            and lsut.create_time &gt;= from_unixtime(#{startTime})
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and lsut.create_time &lt; from_unixtime(#{endTime})
+        </if>
+        ORDER BY
+        lsut.create_time DESC
+    </select>
+
+</mapper>

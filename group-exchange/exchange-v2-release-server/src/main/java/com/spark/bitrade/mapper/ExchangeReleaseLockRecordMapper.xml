@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.ExchangeReleaseLockRecordMapper">
+
+
+    <insert id="addLockRecord">
+        insert into exchange_release_lock_record (
+        `amount`,
+        `coin_symbol`,
+        `ref_id`,
+        `member_id`
+        ) values
+            (
+            #{lockAmount},
+            #{coinSymbol},
+            #{refId},
+            #{memberId},
+            )
+    </insert>
+
+
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.LockSlpReleasePlanMapper">
+
+
+    <select id="findTotalToBoReleasedByMemberId" resultType="java.math.BigDecimal">
+        SELECT SUM(remain_amount) FROM lock_slp_release_plan WHERE member_id=#{memberId} and status=0
+    </select>
+    <select id="findNormalReleasedAmount" resultType="java.math.BigDecimal">
+        SELECT SUM(release_in_amount) FROM lock_slp_release_plan_record WHERE member_id=#{memberId}
+    </select>
+    <select id="findFastResleasedAmount" resultType="java.math.BigDecimal">
+        SELECT SUM(release_in_amount) FROM lock_slp_release_task_record WHERE member_id=#{memberId}
+    </select>
+
+    <!--    获取用户参与记录行明细-->
+    <select id="findMemberRecordDetails" resultType="com.spark.bitrade.vo.LockSlpMemberRecordDetailVo">
+        SELECT
+        p.plan_name AS planName,
+        p.lock_amount AS lockAmount,
+        p.create_time AS createTime,
+        p.lock_amount*p.release_rate AS dailyReleaseAmount,
+        p.plan_income AS planIncome,
+        p.status AS status,
+        p.ref_prev_plan_name AS refPrevPlanName
+        FROM
+        lock_slp_release_plan p
+        WHERE p.member_id=#{memberId}
+        ORDER BY p.create_time DESC
+    </select>
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.MemberBenefitsSettingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.bitrade.entity.MemberBenefitsSetting">
+        <id column="id" property="id" />
+        <result column="level_id" property="levelId" />
+        <result column="buy_discount" property="buyDiscount" />
+        <result column="sell_discount" property="sellDiscount" />
+        <result column="entrust_buy_discount" property="entrustBuyDiscount" />
+        <result column="entrust_sell_discount" property="entrustSellDiscount" />
+        <result column="vip1_buy_discount" property="vip1BuyDiscount" />
+        <result column="vip1_lock_discount" property="vip1LockDiscount" />
+        <result column="vip2_buy_discount" property="vip2BuyDiscount" />
+        <result column="vip2_lock_discount" property="vip2LockDiscount" />
+        <result column="vip3_buy_discount" property="vip3BuyDiscount" />
+        <result column="vip3_lock_discount" property="vip3LockDiscount" />
+        <result column="agent_buy_discount" property="agentBuyDiscount" />
+        <result column="agent_lock_discount" property="agentLockDiscount" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, level_id, buy_discount, sell_discount, entrust_buy_discount, entrust_sell_discount, vip1_buy_discount, vip1_lock_discount, vip2_buy_discount, vip2_lock_discount, vip3_buy_discount, vip3_lock_discount, agent_buy_discount, agent_lock_discount, create_time, update_time
+    </sql>
+
+</mapper>

@@ -1,0 +1,1 @@
+20191115数据库设计在此子工程src/design下，查看ER图需先安装对应IDE的ERMaster插件

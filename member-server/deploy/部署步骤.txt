@@ -1,0 +1,49 @@
+此模块的依赖模块有:
+ucenter-server/ lock-v2-server/ account-server/schedule-job-v2/market/eureka
+
+
+1、执行sql脚本建表
+2、准备基础表数据
+`member_benefits_extends` ---------历史超级合伙人需要做数据处理
+`member_benefits_setting`
+`member_level` -----------注意表中的id，目前只能用1、2、3、4、5
+`member_recommend_commision_setting`-----注意不要出现冲突配置，测试的时候经常出现3层和无限层同时配，会导致返佣失败
+
+`member_require_condition`
+
+`member_rule_descr`
+
+silk_data_dist -----新增币币交易返佣币种和会员权益返佣币种（如有疑问可问世平）
+
+3、搭建并确认Canal+RocketMQ环境OK（运维已经搭建了，但是缺少RocketMQ Console）
+尤其是Canal的配置一定要按给定的配置不要自由发挥
+具体可参考附件中的配置
+
+4、确认member application-prod.properties中的各项配置
+######################这一段MQ的配置是不需要修改的################################
+mq.nameSrvAddr=172.31.48.193:9876
+mq.canalMessageTopic=otc_sync
+mq.canalMessageTag=
+mq.memberTopic=member
+mq.memberTag=""
+mq.memberProducerGroupId=SilkTraderMemeberProducer
+mq.tableMember=member
+mq.tableAccountRunning=exchange_wallet_wal_record_
+biz.distributeLevel = 100
+mq.memberFeeDailyStatConsumerGroup=MemberFeeDailyStatConsumer
+mq.recommendCommisionConsumerGroup=RecommendCommisionConsumer
+mq.exchangeFeeDistributeConsumerGroup=ExchangeFeeDistributeConsumer
+mq.memberConsumerGroup=MemberConsumer
+######################################################
+
+
+#commision.token.exchange.unit=SLU
+#commision.member.recommend.unit=USDT
+price.url.prefix=https://www.silktraderdk.net #####（这个获取k线数据的服务地址前缀需要确认生产环境是否使用的是这个）
+
+5、定时器配置
+登录xxl-job管理控制台
+新增2个定时任务：请参考http://172.16.0.91:8080/xxl-job-admin/jobinfo?jobGroup=15 中member_test执行器的配置
+（1）币币交易手续费返佣：cron: 0 */1 * * * ?                   jobHandler:memberBenefitsDistributeJobHandler
+(2)会员锁仓释放： cron:0 */1 * * * ?                                 jobHandler:memberBenefitsUnlockJobHandler
+

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.CywWalArchiveMapper">
+
+    <resultMap id="BaseResultMap" type="com.spark.bitrade.entity.CywWalletWalRecord">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="member_id" property="memberId" jdbcType="BIGINT"/>
+        <result column="coin_unit" property="coinUnit" jdbcType="VARCHAR"/>
+        <result column="trade_balance" property="tradeBalance" jdbcType="DECIMAL"/>
+        <result column="trade_frozen" property="tradeFrozen" jdbcType="DECIMAL"/>
+        <result column="fee" property="fee" jdbcType="DECIMAL"/>
+        <result column="fee_discount" property="feeDiscount" jdbcType="DECIMAL"/>
+        <result column="trade_type" property="tradeType" jdbcType="INTEGER"/>
+        <result column="ref_id" property="refId" jdbcType="VARCHAR"/>
+        <result column="sync_id" property="syncId" jdbcType="BIGINT"/>
+        <result column="signature" property="signature" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="tcc_status" property="tccStatus" jdbcType="INTEGER"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="findByRefIds" resultMap="BaseResultMap">
+        select
+        `id`,
+        `member_id`,
+        `coin_unit`,
+        `trade_balance`,
+        `trade_frozen`,
+        `fee`,
+        `fee_discount`,
+        `trade_type`,
+        `ref_id`,
+        `sync_id`,
+        `signature`,
+        `status`,
+        `tcc_status`,
+        `remark`,
+        `create_time`,
+        `update_time`
+        from ${table} where ref_id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="deleteByRefIds">
+        delete from ${table} where ref_id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>

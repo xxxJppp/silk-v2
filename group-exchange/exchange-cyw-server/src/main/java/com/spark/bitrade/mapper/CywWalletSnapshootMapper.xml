@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.CywWalletSnapshootMapper">
+
+    <delete id="deleteData">
+        delete from cyw_wallet_snapshoot where op_time = #{optime}
+    </delete>
+
+
+    <select id="getNewest" resultType="com.spark.bitrade.entity.CywWalletSnapshoot">
+        select * from cyw_wallet_snapshoot
+        where
+            member_id=#{memberId}
+            and coin_unit=#{coinUnit}
+        order by op_time desc
+        limit 1
+    </select>
+</mapper>

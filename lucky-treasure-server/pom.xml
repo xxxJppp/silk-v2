@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>bitrade-parent-v2</artifactId>
+        <groupId>com.spark.bitrade</groupId>
+        <version>2.0.0</version>
+    </parent>
+    <groupId>com.spark.bitrade</groupId>
+    <artifactId>lucky-treasure-server</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>lucky-treasure-server</name>
+    <description>幸运宝</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.spark.bitrade</groupId>
+            <artifactId>enum-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.spark.bitrade</groupId>
+            <artifactId>advanced-web-server</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.spark.bitrade</groupId>
+            <artifactId>kafka-wapper</artifactId>
+        </dependency>
+
+        <!-- 依赖redis封装类 -->
+        <dependency>
+            <groupId>com.spark.bitrade</groupId>
+            <artifactId>redis-wapper</artifactId>
+        </dependency>
+
+        <!-- 添加feign核心依赖 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.4.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.spark.bitrade</groupId>
+            <artifactId>aliyun-oss-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13-beta-3</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>lucky-treasure-server</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.ExchangeOrderStatMapper">
+
+
+    <!--  统计指定价格下有效的交易数量  -->
+    <select id="sellStatByPrice" resultType="com.spark.bitrade.dto.ExchangeOrderSellStat">
+        select price,
+        sum(
+          case when status=0 then amount else traded_amount end
+        ) amount
+         from exchange_order
+        where symbol=#{symbol} and direction=1  and type=1 and price=#{price}
+    </select>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.UnlockCoinDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.bitrade.entity.UnlockCoinDetail">
+        <id column="id" property="id" />
+        <result column="amount" property="amount" />
+        <result column="create_time" property="createTime" />
+        <result column="lock_coin_detail_id" property="lockCoinDetailId" />
+        <result column="price" property="price" />
+        <result column="remain_amount" property="remainAmount" />
+        <result column="settlement_type" property="settlementType" />
+        <result column="usdt_pricecny" property="usdtPricecny" />
+        <result column="settlement_amount" property="settlementAmount" />
+        <result column="income_type" property="incomeType" />
+    </resultMap>
+
+</mapper>

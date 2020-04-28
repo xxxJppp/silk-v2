@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.OtcOrderMapper">
+
+    <resultMap type="com.spark.bitrade.entity.OtcOrder" id="OtcOrderMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="advertiseId" column="advertise_id" jdbcType="INTEGER"/>
+        <result property="advertiseType" column="advertise_type" jdbcType="INTEGER"/>
+        <result property="aliNo" column="ali_no" jdbcType="VARCHAR"/>
+        <result property="bank" column="bank" jdbcType="VARCHAR"/>
+        <result property="branch" column="branch" jdbcType="VARCHAR"/>
+        <result property="cardNo" column="card_no" jdbcType="VARCHAR"/>
+        <result property="cancelTime" column="cancel_time" jdbcType="TIMESTAMP"/>
+        <result property="commission" column="commission" jdbcType="OTHER"/>
+        <result property="country" column="country" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="customerId" column="customer_id" jdbcType="INTEGER"/>
+        <result property="customerName" column="customer_name" jdbcType="VARCHAR"/>
+        <result property="customerRealName" column="customer_real_name" jdbcType="VARCHAR"/>
+        <result property="maxLimit" column="max_limit" jdbcType="OTHER"/>
+        <result property="memberId" column="member_id" jdbcType="INTEGER"/>
+        <result property="memberName" column="member_name" jdbcType="VARCHAR"/>
+        <result property="memberRealName" column="member_real_name" jdbcType="VARCHAR"/>
+        <result property="minLimit" column="min_limit" jdbcType="OTHER"/>
+        <result property="money" column="money" jdbcType="OTHER"/>
+        <result property="number" column="number" jdbcType="OTHER"/>
+        <result property="orderSn" column="order_sn" jdbcType="INTEGER"/>
+        <result property="payMode" column="pay_mode" jdbcType="VARCHAR"/>
+        <result property="payTime" column="pay_time" jdbcType="TIMESTAMP"/>
+        <result property="price" column="price" jdbcType="OTHER"/>
+        <result property="releaseTime" column="release_time" jdbcType="TIMESTAMP"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="timeLimit" column="time_limit" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="wechat" column="wechat" jdbcType="VARCHAR"/>
+        <result property="coinId" column="coin_id" jdbcType="INTEGER"/>
+        <result property="qrCodeUrl" column="qr_code_url" jdbcType="VARCHAR"/>
+        <result property="qrWeCodeUrl" column="qr_we_code_url" jdbcType="VARCHAR"/>
+        <result property="payCode" column="pay_code" jdbcType="VARCHAR"/>
+        <result property="isManualCancel" column="is_manual_cancel" jdbcType="INTEGER"/>
+        <result property="cancelMemberId" column="cancel_member_id" jdbcType="INTEGER"/>
+        <result property="epayNo" column="epay_no" jdbcType="VARCHAR"/>
+        <result property="payMethod" column="pay_method" jdbcType="INTEGER"/>
+        <result property="closeTime" column="close_time" jdbcType="TIMESTAMP"/>
+        <result property="orderSourceType" column="order_source_type" jdbcType="INTEGER"/>
+        <result property="isOneKey" column="is_one_key" jdbcType="INTEGER"/>
+        <result property="orderMoney" column="order_money" jdbcType="OTHER"/>
+        <result property="serviceMoney" column="service_money" jdbcType="OTHER"/>
+        <result property="serviceRate" column="service_rate" jdbcType="OTHER"/>
+        <result property="payMethodInfo" column="pay_method_info" jdbcType="VARCHAR"/>
+        <result property="wechatNick" column="wechat_nick" jdbcType="VARCHAR"/>
+        <result property="isMerchantsBuy" column="is_merchants_buy" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="findCountByMembers" resultType="map">
+        SELECT member_id, count(*) AS count FROM otc_order WHERE (`status` = 1 OR `status` = 2)
+        <foreach collection="memberIds" open="AND member_id IN(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+        GROUP BY member_id ORDER BY count DESC
+    </select>
+
+    <select id="selectCountByMembersAnd48" resultType="map">
+        SELECT member_id, count(*) AS count, SUM(money) AS _money FROM otc_order WHERE (`status` = 3 or (`status` = 5 and release_time is not null))
+        <foreach collection="memberIds" open="AND member_id IN(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+        AND create_time >= #{date}
+        AND advertise_type = #{type} GROUP BY member_id ORDER BY count ASC, _money ASC
+    </select>
+
+
+</mapper>

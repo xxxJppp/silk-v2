@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.ExchangeWalletMapper">
+    <select id="findList" resultType="com.spark.bitrade.api.vo.ExchangeWalletVo">
+        select
+        w.is_lock as isLock,w.address as address,ifnull(w.balance,0) as balance,ifnull(w.frozen_balance,0) as frozenBalance,w.coin_unit as coinId,w.member_id as memberId,
+        (ifnull(w.balance,0) + ifnull(w.frozen_balance,0)) as totalBalance,1 as accountType
+        from exchange_wallet w
+        <where>
+            #{qo.page} > 0
+            <if test="qo.coinId != null and qo.coinId != ''">
+                and w.coin_unit = #{qo.coinId}
+            </if>
+            <if test="qo.address != null and qo.address != ''">
+                and w.address like  concat("%",#{qo.address},"%")
+            </if>
+            <if test="qo.leastBalance != null and qo.leastBalance > 0">
+                and w.balance &gt;= #{qo.leastBalance}
+            </if>
+            <if test="qo.isLock != null and qo.isLock != '' ">
+                and w.is_lock = #{qo.isLock}
+            </if>
+            <if test="qo.mostBalance != null and qo.mostBalance >= 0">
+                and (w.balance &lt;= #{qo.mostBalance} or w.balance is null)
+            </if>
+            <if test="qo.leastFrozenBalance != null and qo.leastFrozenBalance >= 0">
+                and w.frozen_balance &gt;= #{qo.leastFrozenBalance}
+            </if>
+            <if test="qo.mostFrozenBalance != null and qo.mostFrozenBalance >= 0">
+                and (w.frozen_balance &lt;= #{qo.mostFrozenBalance} or w.frozen_balance is null)
+            </if>
+            <if test="qo.leastTotalBalance != null and qo.leastTotalBalance >= 0">
+                and ( (w.balance + w.frozen_balance) &gt;= #{qo.leastTotalBalance} or w.balance &gt;= #{qo.leastTotalBalance} or  w.frozen_balance &gt;= #{qo.leastTotalBalance})
+            </if>
+            <if test="qo.mostTotalBalance != null and qo.mostTotalBalance >= 0">
+                and ((w.balance + w.frozen_balance) &lt;= #{qo.mostTotalBalance} or (w.balance is null and w.frozen_balance is null)
+                or (w.balance is null and w.frozen_balance &lt;= #{qo.mostTotalBalance}) or (w.frozen_balance is null and w.balance &lt;= #{qo.mostTotalBalance}))
+            </if>
+            <if test="qo.memberId != null and qo.memberId != ''">
+                and w.member_id = #{qo.memberId}
+            </if>
+        </where>
+    </select>
+</mapper>

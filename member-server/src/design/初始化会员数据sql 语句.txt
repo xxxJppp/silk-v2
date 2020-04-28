@@ -1,0 +1,1 @@
+INSERT IGNORE into member_benefits_extends (member_id, level_id, start_time, end_time )  SELECT member_id, 5, now(), (SELECT DATE_ADD(NOW(),INTERVAL 180 DAY))  FROM super_partner_community where usable = 1

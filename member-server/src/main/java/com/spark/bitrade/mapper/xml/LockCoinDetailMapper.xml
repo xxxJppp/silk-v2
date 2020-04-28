@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spark.bitrade.mapper.LockCoinDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.spark.bitrade.entity.LockCoinDetail">
+        <id column="id" property="id" />
+        <result column="cancle_time" property="cancleTime" />
+        <result column="coin_unit" property="coinUnit" />
+        <result column="lock_price" property="lockPrice" />
+        <result column="lock_time" property="lockTime" />
+        <result column="member_id" property="memberId" />
+        <result column="plan_income" property="planIncome" />
+        <result column="plan_unlock_time" property="planUnlockTime" />
+        <result column="ref_activitie_id" property="refActivitieId" />
+        <result column="remain_amount" property="remainAmount" />
+        <result column="status" property="status" />
+        <result column="total_amount" property="totalAmount" />
+        <result column="type" property="type" />
+        <result column="unlock_time" property="unlockTime" />
+        <result column="totalcny" property="totalcny" />
+        <result column="usdt_pricecny" property="usdtPricecny" />
+        <result column="remark" property="remark" />
+        <result column="lock_reward_satus" property="lockRewardSatus" />
+        <result column="sms_send_status" property="smsSendStatus" />
+        <result column="begin_days" property="beginDays" />
+        <result column="cycle_days" property="cycleDays" />
+        <result column="cycle_ratio" property="cycleRatio" />
+        <result column="lock_cycle" property="lockCycle" />
+    </resultMap>
+
+</mapper>
